@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ListItems from '../ListItems';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
+import ListItems from '../ListItems';
 import styles from './styles.module.css';
 
 class ShoppingList extends Component {
@@ -14,48 +14,42 @@ class ShoppingList extends Component {
   }
 
   addItem(e) {
-    if (this.state.text !== "") {
+    const { text } = this.state;
+    if (text !== '') {
       const newItem = {
-        text: this.state.text,
-        key: Date.now()
+        text,
+        key: Date.now(),
       };
 
-      this.setState((prevState) => {
-        return {
-          items: prevState.items.concat(newItem)
-        };
-      });
+      this.setState((prevState) => ({
+        items: prevState.items.concat(newItem),
+      }));
 
       this.setState({ text: '' });
     }
-    console.log(this.state.items);
 
     e.preventDefault();
   }
 
-  deleteItem(key){
-    const filteredItems = this.state.items.filter(item => item.key !== key);
+  deleteItem(key) {
+    const { items } = this.state;
+    const filteredItems = items.filter((item) => item.key !== key);
 
     this.setState({
-      items: filteredItems
+      items: filteredItems,
     });
   }
 
   render() {
+    const { items, text } = this.state;
+
     return (
       <div className={styles.listElements}>
-        <form onSubmit={this.addItem}
-              className={styles.newItem}>
-          <input value={this.state.text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Add item...">
-          </input>
-
-          <button type="submit">
-            <FontAwesomeIcon
-              icon={faPlusCircle}
-            />
-          </button>
+        <form onSubmit={this.addItem} className={styles.newItem}>
+          <input value={text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Item Name" />
+          <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
         </form>
-        <ListItems entries={this.state.items} deleteItem={this.deleteItem}/>
+        <ListItems entries={items} deleteItem={this.deleteItem} />
       </div>
     );
   }

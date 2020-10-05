@@ -30,6 +30,7 @@ jobs:
 
       - run: npm install
       - run: npm test
+      - run: npm run lint
       - run: npm run build
 
       - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}/ --recursive

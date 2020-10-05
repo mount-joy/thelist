@@ -28,11 +28,11 @@ describe('ListItems', () => {
 
   it('calls deleteItem when the trash icon is clicked', () => {
     const deleteItem = jest.fn();
-    const { getByTestId } = render(<ListItems entries={ENTRIES} deleteItem={deleteItem} />)
+    const { getByTestId } = render(<ListItems entries={ENTRIES} deleteItem={deleteItem} />);
 
     fireEvent.click(getByTestId('delete-item-Oranges'));
 
     expect(deleteItem).toHaveBeenCalledTimes(1);
     expect(deleteItem).toHaveBeenCalledWith('item-2');
-  })
+  });
 });

@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 import './style/index.css';
 
-const destination = document.querySelector("#wrapper");
+const destination = document.querySelector('#wrapper');
 ReactDOM.render(<ShoppingList />, destination);
 
 // If you want your app to work offline and load faster, you can change

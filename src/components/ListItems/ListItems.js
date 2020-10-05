@@ -7,9 +7,7 @@ import styles from './styles.module.css';
 const ListItems = ({ entries, deleteItem }) => (
   <ul className={styles.list}>
     {entries.map(({ key, text }) => (
-      <li key={key}
-          className={styles.listItem}
-      >
+      <li key={key} className={styles.listItem}>
         {text}
         {' '}
         <FontAwesomeIcon
