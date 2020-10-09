@@ -10,7 +10,7 @@ class ShoppingList extends Component {
 
   addItem(e) {
     if (this._inputElement.value !== "") {
-      var newItem = {
+      const newItem = {
         text: this._inputElement.value,
         key: Date.now()
       };
