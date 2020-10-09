@@ -5,13 +5,13 @@ class ShoppingList extends Component {
   constructor(props) {
     super(props);
     this.addItem = this.addItem.bind(this);
-    this.state = { items: [] };
+    this.state = { items: [], text: '' };
   }
 
   addItem(e) {
-    if (this._inputElement.value !== "") {
+    if (this.state.text !== "") {
       const newItem = {
-        text: this._inputElement.value,
+        text: this.state.text,
         key: Date.now()
       };
 
@@ -21,7 +21,7 @@ class ShoppingList extends Component {
         };
       });
 
-      this._inputElement.value = "";
+      this.setState({ text: '' });
     }
     console.log(this.state.items);
 
@@ -32,7 +32,7 @@ class ShoppingList extends Component {
     return (
       <div>
         <form onSubmit={this.addItem}>
-          <input ref={(a) => this._inputElement = a} placeholder="Item Name">
+          <input value={this.state.text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Item Name">
           </input>
           <button type="submit">Add</button>
         </form>
