@@ -5,6 +5,7 @@ class ShoppingList extends Component {
   constructor(props) {
     super(props);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.state = { items: [], text: '' };
   }
 
@@ -28,6 +29,16 @@ class ShoppingList extends Component {
     e.preventDefault();
   }
 
+  deleteItem(key){
+    var filteredItems = this.state.items.filter(function (item) {
+      return (item.key !== key);
+    });
+
+    this.setState({
+      items: filteredItems
+    });
+  }
+
   render() {
     return (
       <div>
@@ -36,7 +47,7 @@ class ShoppingList extends Component {
           </input>
           <button type="submit">Add</button>
         </form>
-        <ListItems entries={this.state.items}/>
+        <ListItems entries={this.state.items} delete={this.deleteItem}/>
       </div>
     );
   }
