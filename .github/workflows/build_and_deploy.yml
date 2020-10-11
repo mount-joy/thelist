@@ -31,15 +31,8 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - uses: shallwefootball/s3-upload-action@master
-        with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: thelist.app
-          source_dir: build
-          destination_dir: ''
+      - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}/ --recursive
         if: github.ref == 'refs/heads/master'
-
       - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}/${{github.ref}} --recursive
         if: github.ref != 'refs/heads/master'
 
