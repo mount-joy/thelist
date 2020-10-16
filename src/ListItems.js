@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './items.css';
 
 class ListItems extends Component {
@@ -12,7 +14,7 @@ class ListItems extends Component {
     }
 
     createTasks(item) {
-        return <li key={item.key}>{item.text} <i class="fas fa-trash" onClick={() => this.delete(item.key)}></i></li>
+        return <li key={item.key}>{item.text} <FontAwesomeIcon icon={faTrash} onClick={() => this.delete(item.key)} /></li>
     }
 
     render() {
