@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import ShoppingList from './ShoppingList';
+import './style/index.css';
+import ShoppingList from './components/ShoppingList';
 import * as serviceWorker from './serviceWorker';
 
 var destination = document.querySelector("#wrapper");
