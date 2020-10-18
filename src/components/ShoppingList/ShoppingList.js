@@ -45,7 +45,7 @@ class ShoppingList extends Component {
           </input>
           <button type="submit">Add</button>
         </form>
-        <ListItems entries={this.state.items} delete={this.deleteItem}/>
+        <ListItems entries={this.state.items} deleteItem={this.deleteItem}/>
       </div>
     );
   }
