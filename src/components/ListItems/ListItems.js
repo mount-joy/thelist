@@ -5,7 +5,18 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 const ListItems = ({ entries, deleteItem }) => (
   <ul>
     {entries.map(({ key, text }) => (
-      <li key={key}>{text} <FontAwesomeIcon icon={faTrash} onClick={() => deleteItem(key)} /></li>
+      <li key={key}>
+        {text}
+        {' '}
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() => deleteItem(key)}
+          role="button"
+          aria-label={`Delete item: ${text}`}
+          data-testid={`delete-item-${text}`}
+          tabIndex={0}
+        />
+      </li>
     ))}
   </ul>
 );
