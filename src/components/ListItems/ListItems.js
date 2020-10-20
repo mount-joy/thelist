@@ -2,6 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import styles from './styles.module.css';
+
 const ListItems = ({ entries, deleteItem }) => (
   <ul>
     {entries.map(({ key, text }) => (
@@ -15,6 +17,7 @@ const ListItems = ({ entries, deleteItem }) => (
           aria-label={`Delete item: ${text}`}
           data-testid={`delete-item-${text}`}
           tabIndex={0}
+          className={styles.deleteIcon}
         />
       </li>
     ))}
