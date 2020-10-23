@@ -13,6 +13,10 @@ const ListItems = ({ entries, deleteItem }) => (
         <FontAwesomeIcon
           icon={faTrash}
           onClick={() => deleteItem(key)}
+          role="button"
+          aria-label={`Delete item: ${text}`}
+          data-testid={`delete-item-${text}`}
+          tabIndex={0}
           className={styles.deleteIcon}
         />
       </li>
