@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ListItems from '../ListItems';
 
+import styles from './styles.module.css';
+
 class ShoppingList extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ class ShoppingList extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.listElements}>
         <form onSubmit={this.addItem}>
           <input value={this.state.text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Item Name">
           </input>
