@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+:root {
+  --item_grey: #F8F8F8;
+}
+
 h1, h2 {
   text-align: center;
 }
