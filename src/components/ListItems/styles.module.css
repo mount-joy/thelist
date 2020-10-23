@@ -1,3 +1,7 @@
+.list {
+  margin: 0;
+}
+
 .listItem {
   background-color: var(--item_grey);
   color: var(--font_grey);
