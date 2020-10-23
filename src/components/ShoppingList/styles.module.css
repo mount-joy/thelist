@@ -1,3 +1,35 @@
 .listElements {
     width: 100%;
 }
+
+.newItem {
+    background-color: var(--item_grey);
+    color: var(--font_grey);
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 0 10px 0 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.newItem input,
+.newItem button[type=submit] {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+
+.newItem input {
+    border-bottom: 2px solid var(--main_green);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.newItem button[type=submit] {
+    font-size: 20px;
+    padding: 0;
+    color: var(--main_green);
+}
