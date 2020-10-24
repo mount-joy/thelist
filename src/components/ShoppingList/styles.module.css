@@ -36,4 +36,5 @@
     font-size: 20px;
     padding: 0;
     color: var(--main_green);
+    cursor: pointer;
 }
