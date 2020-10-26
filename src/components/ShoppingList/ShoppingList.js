@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import ListItems from '../ListItems';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './styles.module.css';
 
 class ShoppingList extends Component {
   constructor(props) {
@@ -39,11 +43,17 @@ class ShoppingList extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.addItem}>
-          <input value={this.state.text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Item Name">
+      <div className={styles.listElements}>
+        <form onSubmit={this.addItem}
+              className={styles.newItem}>
+          <input value={this.state.text} onChange={(e) => this.setState({ text: e.target.value })} placeholder="Add item...">
           </input>
-          <button type="submit">Add</button>
+
+          <button type="submit">
+            <FontAwesomeIcon
+              icon={faPlusCircle}
+            />
+          </button>
         </form>
         <ListItems entries={this.state.items} deleteItem={this.deleteItem}/>
       </div>

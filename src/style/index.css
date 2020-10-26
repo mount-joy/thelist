@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+:root {
+  --item_grey: #F8F8F8;
+  --font_grey: #5B5B5B;
+  --main_green: #8AB661;
+}
+
 h1, h2 {
   text-align: center;
 }
@@ -20,4 +26,10 @@ h1, h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 26px;
+}
+
+ul, li {
+  list-style: none;
+  padding-inline-start: 0px;
 }
