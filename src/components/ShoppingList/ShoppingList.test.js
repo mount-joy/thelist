@@ -4,8 +4,8 @@ import ShoppingList from './ShoppingList';
 
 describe('ShoppingList', () => {
   it('renders the add button', () => {
-    const { getByText } = render(<ShoppingList />);
-    const addButton = getByText(/Add/);
+    const { getByLabelText } = render(<ShoppingList />);
+    const addButton = getByLabelText(/Add/);
 
     expect(addButton).toBeInTheDocument();
     expect(addButton.nodeName).toEqual('BUTTON');
