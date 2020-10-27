@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
+import useItems from '../../hooks/useItems';
 import ListItems from '../ListItems';
 import styles from './styles.module.css';
 
 const ShoppingList = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useItems();
   const [text, setText] = useState('');
 
   const addItem = (e) => {
@@ -18,7 +19,7 @@ const ShoppingList = () => {
         key: Date.now(),
       };
 
-      setItems((prevState) => prevState.concat(newItem));
+      setItems(items.concat(newItem));
       setText('');
     }
   };
