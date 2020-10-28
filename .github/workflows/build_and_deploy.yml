@@ -21,6 +21,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
+      - name: Set the path
+        run: |
+          echo "path=/" >> $GITHUB_ENV
+          echo "prefix=dev." >> $GITHUB_ENV
+        if: github.ref != 'refs/heads/main'
+
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
@@ -31,16 +37,13 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
-      - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}/ --recursive
-        if: github.ref == 'refs/heads/main'
-      - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}/${{github.ref}} --recursive
-        if: github.ref != 'refs/heads/main'
+      - run: aws s3 cp build s3://${prefix}${{ secrets.BUCKET_NAME }}$path --recursive
 
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Check out a preview at https://thelist.app/${{github.ref}}!"
+          msg: Check out a preview at https://dev.thelist.app/${{github.ref}}!
           check_for_duplicate_msg: true
         if: github.ref != 'refs/heads/main'
