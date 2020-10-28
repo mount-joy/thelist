@@ -22,7 +22,9 @@ jobs:
           aws-region: eu-west-2
 
       - name: Set the path
-        run: echo "path=/${{github.ref}}" >> $GITHUB_ENV
+        run: |
+          echo "path=/${{github.ref}}" >> $GITHUB_ENV
+          echo "prefix=dev." >> $GITHUB_ENV
         if: github.ref != 'refs/heads/main'
 
       - name: Use Node.js 12.x
@@ -35,13 +37,13 @@ jobs:
       - run: npm run lint
       - run: PUBLIC_URL=$path npm run build
 
-      - run: aws s3 cp build s3://${{ secrets.BUCKET_NAME }}$path --recursive
+      - run: aws s3 cp build s3://${prefix}${{ secrets.BUCKET_NAME }}$path --recursive
 
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: Check out a preview at https://thelist.app/$path!
+          msg: Check out a preview at https://dev.thelist.app/${path}!
           check_for_duplicate_msg: true
         if: github.ref != 'refs/heads/main'
