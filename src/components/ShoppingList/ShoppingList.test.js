@@ -8,8 +8,18 @@ describe('ShoppingList', () => {
     const addButton = getByLabelText(/Add/);
 
     expect(addButton).toBeInTheDocument();
-    expect(addButton.nodeName).toEqual('BUTTON');
-    expect(addButton.type).toEqual('submit');
+    expect(addButton.attributes.role.value).toEqual('button');
+  });
+
+  it('adds an item to the list when the add icon is pressed', () => {
+    const { getByPlaceholderText, getByLabelText, getByText } = render(<ShoppingList />);
+
+    const inputBox = getByPlaceholderText('Item Name');
+    fireEvent.change(inputBox, { target: { value: 'Peaches' } });
+
+    const addButton = getByLabelText(/Add/);
+    fireEvent.click(addButton);
+    expect(getByText(/Peaches/)).toBeInTheDocument();
   });
 
   describe('when an item is added to the list', () => {

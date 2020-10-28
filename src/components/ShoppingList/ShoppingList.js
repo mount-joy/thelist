@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import useItems from '../../hooks/useItems';
 import ListItems from '../ListItems';
 import styles from './styles.module.css';
+import Row from '../Row';
 
 const ShoppingList = () => {
   const [items, setItems] = useItems();
@@ -31,9 +31,10 @@ const ShoppingList = () => {
 
   return (
     <div className={styles.listElements}>
-      <form onSubmit={addItem} className={styles.newItem}>
-        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" />
-        <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
+      <form onSubmit={addItem}>
+        <Row icon={faPlusCircle} iconClassName={styles.newItemIcon} iconLabel="Add item" iconOnClick={addItem}>
+          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" />
+        </Row>
       </form>
       <ListItems entries={items} deleteItem={deleteItem} />
     </div>

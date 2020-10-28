@@ -3,21 +3,6 @@
 }
 
 .listItem {
-  background-color: var(--item_grey);
-  color: var(--font_grey);
-  height: 40px;
-  border-radius: 20px;
-  margin-top: 10px;
-  box-sizing: border-box;
-  padding: 0 14px 0 28px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 12px;
   font-weight: 700;
-}
-
-.deleteIcon {
-  cursor: pointer;
-  font-size: 15px;
 }
