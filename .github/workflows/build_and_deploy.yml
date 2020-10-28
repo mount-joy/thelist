@@ -44,6 +44,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: Check out a preview at https://dev.thelist.app/${path}!
+          msg: Check out a preview at https://dev.thelist.app/${{github.ref}}!
           check_for_duplicate_msg: true
         if: github.ref != 'refs/heads/main'
