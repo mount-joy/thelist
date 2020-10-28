@@ -33,7 +33,12 @@ const ShoppingList = () => {
     <div className={styles.listElements}>
       <form onSubmit={addItem}>
         <Row icon={faPlusCircle} iconClassName={styles.newItemIcon} iconLabel="Add item" iconOnClick={addItem}>
-          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" />
+          <input
+            className={styles.newItemInput}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Item Name"
+          />
         </Row>
       </form>
       <ListItems entries={items} deleteItem={deleteItem} />

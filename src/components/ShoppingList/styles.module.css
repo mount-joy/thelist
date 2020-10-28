@@ -2,14 +2,13 @@
     width: 100%;
 }
 
-.newItem input,
-.newItem button[type=submit] {
+.newItemInput {
     background-color: transparent;
     outline: none;
     border: none;
 }
 
-.newItem input {
+.newItemInput {
     border-bottom: 2px solid var(--main_green);
     font-size: 12px;
     font-weight: 700;
@@ -17,7 +16,7 @@
     margin-right: 20px;
 }
 
-.newItem input:focus {
+.newItemInput:focus {
     color: var(--font_grey);
 }
 
