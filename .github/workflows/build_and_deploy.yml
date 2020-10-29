@@ -37,7 +37,7 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
-      - run: aws s3 cp build s3://${prefix}${{ secrets.BUCKET_NAME }}$path --recursive
+      - run: aws s3 cp build s3://${prefix}${{ secrets.BUCKET_NAME }}${path} --recursive
 
       - name: comment PR
         uses: unsplash/comment-on-pr@master
