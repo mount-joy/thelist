@@ -7,26 +7,16 @@ import ListItems from '../ListItems';
 import styles from './styles.module.css';
 
 const ShoppingList = () => {
-  const [items, setItems] = useItems();
+  const [items, newItem, deleteItem] = useItems();
   const [text, setText] = useState('');
 
   const addItem = (e) => {
     e.preventDefault();
 
     if (text !== '') {
-      const newItem = {
-        text,
-        key: Date.now(),
-      };
-
-      setItems(items.concat(newItem));
+      newItem(text);
       setText('');
     }
-  };
-
-  const deleteItem = (key) => {
-    const filteredItems = items.filter((item) => item.key !== key);
-    setItems(filteredItems);
   };
 
   return (
