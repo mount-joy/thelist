@@ -1,13 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { get, set } from 'idb-keyval';
 
-export const IDB_KEY = 'items';
+const IDB_KEY = 'items';
+const SET_VALUE = 'useItems/SET_VALUE';
+
+const initialState = { items: [] };
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case SET_VALUE:
+      return { items: action.data };
+    default:
+      throw new Error('Action not recognised');
+  }
+};
 
 const useItems = () => {
-  const [items, setItems] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const setValue = (newValue) => {
-    setItems(newValue);
+    dispatch({ type: SET_VALUE, data: newValue });
     return set(IDB_KEY, newValue);
   };
 
@@ -17,14 +29,14 @@ const useItems = () => {
     (async () => {
       const val = await get(IDB_KEY);
       if (val != null && mounted) {
-        setItems(val);
+        dispatch({ type: SET_VALUE, data: val });
       }
     })();
 
     return () => { mounted = false; };
   }, []);
 
-  return [items, setValue];
+  return [state.items, setValue];
 };
 
 export default useItems;
