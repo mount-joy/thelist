@@ -20,12 +20,12 @@
   border: 0;
   font-size: 12px;
   font-weight: 700;
+  flex-grow: 1;
 }
 
 .listItem input:focus {
   outline: 0;
   border-bottom: 2px solid var(--main_green);
-  flex-grow: 1;
   margin-right: 20px;
 }
 
