@@ -29,15 +29,16 @@ const ShoppingList = () => {
     setItems(filteredItems);
   };
 
-  const updateItem = (text, key) => {
-    const updatedItems = items.map(item =>{
-      if(item.key===key){
-        item.text=text;
+  const updateItem = (edit, key) => {
+    const updatedItems = items.map((item) => {
+      const newItem = item;
+      if (item.key === key) {
+        newItem.text = edit;
       }
-      return item;
+      return newItem;
     });
     setItems(updatedItems);
-  }
+  };
 
   return (
     <div className={styles.listElements}>
@@ -45,9 +46,10 @@ const ShoppingList = () => {
         <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" />
         <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
       </form>
-      <ListItems entries={items}
-      deleteItem={deleteItem}
-      updateItem={updateItem}
+      <ListItems
+        entries={items}
+        deleteItem={deleteItem}
+        updateItem={updateItem}
       />
     </div>
   );

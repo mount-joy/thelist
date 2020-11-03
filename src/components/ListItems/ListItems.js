@@ -12,7 +12,7 @@ const ListItems = ({ entries, deleteItem, updateItem }) => (
           type="text"
           id={key}
           value={text}
-          onChange = {(e) => updateItem(e.target.value, key)}
+          onChange={(e) => updateItem(e.target.value, key)}
         />
         {' '}
         <FontAwesomeIcon
