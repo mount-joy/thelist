@@ -29,13 +29,26 @@ const ShoppingList = () => {
     setItems(filteredItems);
   };
 
+  const updateItem = (text, key) => {
+    const updatedItems = items.map(item =>{
+      if(item.key===key){
+        item.text=text;
+      }
+      return item;
+    });
+    setItems(updatedItems);
+  }
+
   return (
     <div className={styles.listElements}>
       <form onSubmit={addItem} className={styles.newItem}>
         <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" />
         <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
       </form>
-      <ListItems entries={items} deleteItem={deleteItem} />
+      <ListItems entries={items}
+      deleteItem={deleteItem}
+      updateItem={updateItem}
+      />
     </div>
   );
 };
