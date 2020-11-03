@@ -19,11 +19,11 @@ const ENTRIES = [
 
 describe('ListItems', () => {
   it('renders each item', () => {
-    const { getByText } = render(<ListItems entries={ENTRIES} deleteItem={jest.fn()} />);
+    const { getByDisplayValue } = render(<ListItems entries={ENTRIES} deleteItem={jest.fn()} />);
 
-    expect(getByText(/Grapes/)).toBeInTheDocument();
-    expect(getByText(/Apples/)).toBeInTheDocument();
-    expect(getByText(/Oranges/)).toBeInTheDocument();
+    expect(getByDisplayValue(/Grapes/)).toBeInTheDocument();
+    expect(getByDisplayValue(/Apples/)).toBeInTheDocument();
+    expect(getByDisplayValue(/Oranges/)).toBeInTheDocument();
   });
 
   it('calls deleteItem when the trash icon is clicked', () => {
