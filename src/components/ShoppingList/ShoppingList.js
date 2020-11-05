@@ -29,11 +29,14 @@ const ShoppingList = () => {
     setItems(filteredItems);
   };
 
-  const updateItem = (edit, key) => {
+  const updateItem = (updatedValue, key) => {
     const updatedItems = items.map((item) => {
       const newItem = item;
       if (item.key === key) {
-        newItem.text = edit;
+        return {
+          ...item,
+          text: updatedValue,
+        };
       }
       return newItem;
     });
