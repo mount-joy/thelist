@@ -9,26 +9,16 @@ import { visuallyHidden } from '../../style/common.module.css';
 import styles from './styles.module.css';
 
 const ShoppingList = () => {
-  const [items, setItems] = useItems();
+  const [items, newItem, deleteItemByKey] = useItems();
   const [text, setText] = useState('');
 
   const addItem = (e) => {
     e.preventDefault();
 
     if (text !== '') {
-      const newItem = {
-        text,
-        key: Date.now(),
-      };
-
-      setItems(items.concat(newItem));
+      newItem(text);
       setText('');
     }
-  };
-
-  const deleteItem = (key) => {
-    const filteredItems = items.filter((item) => item.key !== key);
-    setItems(filteredItems);
   };
 
   return (
@@ -38,7 +28,7 @@ const ShoppingList = () => {
         <label htmlFor="item-name" className={visuallyHidden}>Item Name</label>
         <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
       </form>
-      <ListItems entries={items} deleteItem={deleteItem} />
+      <ListItems entries={items} deleteItem={deleteItemByKey} />
     </div>
   );
 };
