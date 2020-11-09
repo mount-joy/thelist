@@ -9,7 +9,7 @@
   border-radius: 20px;
   margin-top: 10px;
   box-sizing: border-box;
-  padding: 0 14px 0 28px;
+  padding: 0 10px 0 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,4 +33,23 @@
 .deleteIcon {
   cursor: pointer;
   font-size: 15px;
+  margin-right: 20px;
+}
+
+.completeIcon,
+.completedIcon {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+  outline: none;
+  color: var(--check_grey);
+}
+
+.completeIcon:hover {
+  color: var(--check_yellow);
+  opacity: 0.5;
+}
+
+.completedIcon {
+  color: var(--check_yellow);
 }

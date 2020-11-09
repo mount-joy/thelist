@@ -17,6 +17,7 @@ const ShoppingList = () => {
       const newItem = {
         text,
         key: Date.now(),
+        isCompleted: false,
       };
 
       setItems(items.concat(newItem));
@@ -40,6 +41,20 @@ const ShoppingList = () => {
     setItems(updatedItems);
   };
 
+  const completeItem = (key) => {
+    const completedItems = items.map((item) => {
+      const newItem = item;
+      if (item.key === key) {
+        return {
+          ...item,
+          isCompleted: true,
+        };
+      }
+      return newItem;
+    });
+    setItems(completedItems);
+  };
+
   return (
     <div className={styles.listElements}>
       <form onSubmit={addItem} className={styles.newItem}>
@@ -50,6 +65,7 @@ const ShoppingList = () => {
         entries={items}
         deleteItem={deleteItem}
         updateItem={updateItem}
+        completeItem={completeItem}
       />
     </div>
   );
