@@ -1,0 +1,36 @@
+.listSelector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--item_grey);
+    box-sizing: border-box;
+    padding: 6px 10px 6px 6px;
+    border-radius: 20px;
+}
+
+.listSelector ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.listSelector li {
+    padding: 5px 26px;
+    border-radius: 20px;
+    background-color: var(--main_green);
+    color: #FFFFFF;
+    font-size: 13px;
+    margin-right: 10px;
+    opacity: 0.5;
+}
+
+.listSelector .active {
+    opacity: 1;
+}
+
+.addListIcon {
+    font-size: 20px;
+    padding: 0;
+    color: var(--main_green);
+    cursor: pointer;
+}
