@@ -45,9 +45,16 @@ const ShoppingList = () => {
     const completedItems = items.map((item) => {
       const newItem = item;
       if (item.key === key) {
+        if (item.isCompleted === false) {
+          return {
+            ...item,
+            isCompleted: true,
+          };
+        }
+
         return {
           ...item,
-          isCompleted: true,
+          isCompleted: false,
         };
       }
       return newItem;
