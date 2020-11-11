@@ -43,6 +43,12 @@ const ShoppingList = () => {
     setItems(updatedItems);
   };
 
+  const keypressHandler = (e) => {
+    if (e.keyCode === 13) {
+      e.target.blur();
+    }
+  };
+
   return (
     <div className={styles.listElements}>
       <form onSubmit={addItem} className={styles.newItem}>
@@ -53,6 +59,7 @@ const ShoppingList = () => {
         entries={items}
         deleteItem={deleteItem}
         updateItem={updateItem}
+        keypressHandler={keypressHandler}
       />
     </div>
   );

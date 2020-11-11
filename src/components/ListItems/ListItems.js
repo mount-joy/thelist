@@ -4,7 +4,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListItems = ({ entries, deleteItem, updateItem }) => (
+const ListItems = ({ entries, deleteItem, updateItem, keypressHandler }) => (
   <ul className={styles.list}>
     {entries.map(({ key, text }) => (
       <li key={key} className={styles.listItem}>
@@ -13,6 +13,7 @@ const ListItems = ({ entries, deleteItem, updateItem }) => (
           id={key}
           value={text}
           onChange={(e) => updateItem(e.target.value, key)}
+          onKeyDown={keypressHandler}
         />
         {' '}
         <FontAwesomeIcon
