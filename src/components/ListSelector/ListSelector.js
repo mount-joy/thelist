@@ -6,14 +6,14 @@ import styles from './styles.module.css';
 
 const ListSelector = () => (
   <div className={styles.listSelector}>
-      <ul>
-        <li className={styles.active}>Shopping List</li>
-        <li>To Do List</li>
-      </ul>
-      <FontAwesomeIcon
-        icon={faPlusCircle}
-        className={styles.addListIcon}
-      />
+    <ul>
+      <li className={styles.active}>Shopping List</li>
+      <li>To Do List</li>
+    </ul>
+    <FontAwesomeIcon
+      icon={faPlusCircle}
+      className={styles.addListIcon}
+    />
   </div>
 );
 
