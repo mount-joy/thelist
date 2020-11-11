@@ -18,15 +18,14 @@ code {
   --main_green: #8AB661;
 }
 
-h1, h2 {
-  text-align: center;
-}
-
 #wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 26px;
+  padding: 16px 26px 0;
+  background-color: #FFFFFF;
+  border-radius: 33px;
+  margin-top: -30px;
 }
 
 ul, li {

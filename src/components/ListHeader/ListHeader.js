@@ -6,9 +6,20 @@ import styles from './styles.module.css';
 
 const ListHeader = () => (
     <div className={styles.listHeader}>
-        <h1>thelist.app</h1>
-        <h2>Put it on the list!</h2>
-        <FontAwesomeIcon icon={faShareAlt} />
+        <div className={styles.headerRow}>
+            <FontAwesomeIcon
+                icon={faShareAlt}
+                className={styles.shareIcon}
+            />
+            <FontAwesomeIcon
+                icon={faShareAlt}
+                className={styles.shareIcon}
+            />
+        </div>
+        <div className={styles.headerRow}>
+            <h3>Shopping List</h3>
+            <h4>15 items</h4>
+        </div>
     </div>
 );
 
