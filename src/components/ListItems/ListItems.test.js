@@ -45,11 +45,8 @@ describe('ListItems', () => {
 
     fireEvent.change(inputBox, { target: { value: 'Bananas' } });
     expect(inputBox.value).toBe('Bananas');
-    expect(updateItem).toHaveBeenCalledTimes(1);
-    expect(updateItem).toHaveBeenCalledWith('item-1');
 
-    expect(getByDisplayValue(/Bananas/)).toBeInTheDocument();
-    expect(getByDisplayValue(/Apples/)).toBeInTheDocument();
-    expect(getByDisplayValue(/Oranges/)).toBeInTheDocument();
+    expect(getByTestId('edit-item-Bananas')).toBeInTheDocument();
+    expect(getByTestId('edit-item-Grapes')).toBeInTheDocument();
   });
 });
