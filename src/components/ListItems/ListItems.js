@@ -16,6 +16,7 @@ const ListItems = ({
           value={text}
           onChange={(e) => updateItem(e.target.value, key)}
           onKeyDown={keypressHandler}
+          data-testid={`edit-item-${text}`}
         />
         {' '}
         <FontAwesomeIcon
