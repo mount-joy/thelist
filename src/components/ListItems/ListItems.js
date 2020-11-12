@@ -13,6 +13,7 @@ const ListItems = ({ entries, deleteItem, updateItem }) => (
           id={key}
           value={text}
           onChange={(e) => updateItem(e.target.value, key)}
+          data-testid={`edit-item-${text}`}
         />
         {' '}
         <FontAwesomeIcon
