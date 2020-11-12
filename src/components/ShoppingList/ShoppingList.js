@@ -45,6 +45,12 @@ const ShoppingList = () => {
     setItems(updatedItems);
   };
 
+  const keypressHandler = (e) => {
+    if (e.keyCode === 13) {
+      e.target.blur();
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.listElements}>
@@ -57,6 +63,7 @@ const ShoppingList = () => {
           entries={items}
           deleteItem={deleteItem}
           updateItem={updateItem}
+          keypressHandler={keypressHandler}
         />
       </div>
     </div>
