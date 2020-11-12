@@ -45,9 +45,9 @@ describe('ShoppingList', () => {
     });
 
     it('edits item text when input field is edited', () => {
-      const inputBox = instance.getByTestId('edit-item-Apples');
+      const applesInputBox = instance.getByTestId('edit-item-Apples');
 
-      fireEvent.change(inputBox, { target: { value: 'Bananas' } });
+      fireEvent.change(applesInputBox, { target: { value: 'Bananas' } });
 
       expect(instance.queryByDisplayValue(/Oranges/)).not.toBeNull();
       expect(instance.queryByDisplayValue(/Bananas/)).not.toBeNull();
