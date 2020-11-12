@@ -43,8 +43,8 @@ const ShoppingList = () => {
       }
       return newItem;
     });
-    setItems(completedItems);
-  });
+    setItems(updatedItems);
+  };
 
   const completeItem = (key) => {
     const completedItems = items.map((item) => {
