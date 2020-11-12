@@ -1,4 +1,14 @@
 .listSelector {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 8px 26px;
+    box-shadow: 0px -5px 10px #0000000A;
+}
+
+.selectorWrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
