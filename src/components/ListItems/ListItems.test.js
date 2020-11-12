@@ -36,17 +36,15 @@ describe('ListItems', () => {
     expect(deleteItem).toHaveBeenCalledWith('item-2');
   });
 
-  it('edits item text when item input is altered', () => {
-    let inputBox;
+  it('calls updateItem when item input is altered', () => {
     const updateItem = jest.fn();
     const { getByTestId } = render(<ListItems entries={ENTRIES} deleteItem={jest.fn()} updateItem={updateItem} />);
 
-    inputBox = getByTestId('edit-item-Grapes');
+    const inputBox = getByTestId('edit-item-Grapes');
 
     fireEvent.change(inputBox, { target: { value: 'Bananas' } });
-    expect(inputBox.value).toBe('Bananas');
 
-    expect(getByTestId('edit-item-Bananas')).toBeInTheDocument();
-    expect(getByTestId('edit-item-Grapes')).toBeInTheDocument();
+    expect(updateItem).toHaveBeenCalledTimes(1);
+    expect(updateItem).toHaveBeenCalledWith('Bananas', 'item-0');
   });
 });
