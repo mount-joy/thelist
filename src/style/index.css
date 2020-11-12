@@ -18,16 +18,6 @@ code {
   --main_green: #8AB661;
 }
 
-#wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 26px 0;
-  background-color: #FFFFFF;
-  border-radius: 33px;
-  margin: -30px auto 65px auto;
-}
-
 #listSelector {
   position: fixed;
   bottom: 0;

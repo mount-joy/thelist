@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ListHeader from './components/ListHeader';
-import ShoppingList from './components/ShoppingList';
-import ListSelector from './components/ListSelector';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import './style/index.css';
 
-const header = document.querySelector('#header');
-ReactDOM.render(<ListHeader />, header);
-
-const destination = document.querySelector('#wrapper');
-ReactDOM.render(<ShoppingList />, destination);
+const wrapper = document.querySelector('#wrapper');
+ReactDOM.render(<App />, wrapper);
 
 const listSelector = document.querySelector('#listSelector');
 ReactDOM.render(<ListSelector />, listSelector);

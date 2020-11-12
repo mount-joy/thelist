@@ -13,8 +13,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.listItem input {
+  background-color: transparent;
+  border: 0;
   font-size: 12px;
   font-weight: 700;
+  flex-grow: 1;
+}
+
+.listItem input:focus {
+  outline: 0;
+  border-bottom: 2px solid var(--main_green);
+  margin-right: 20px;
 }
 
 .deleteIcon {
