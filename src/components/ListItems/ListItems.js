@@ -4,11 +4,17 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListItems = ({ entries, deleteItem }) => (
+const ListItems = ({ entries, deleteItem, updateItem }) => (
   <ul className={styles.list}>
     {entries.map(({ key, text }) => (
       <li key={key} className={styles.listItem}>
-        {text}
+        <input
+          type="text"
+          id={key}
+          value={text}
+          onChange={(e) => updateItem(e.target.value, key)}
+          data-testid={`edit-item-${text}`}
+        />
         {' '}
         <FontAwesomeIcon
           icon={faTrash}

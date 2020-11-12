@@ -31,8 +31,8 @@ describe('ShoppingList', () => {
     });
 
     it('displays the new items', () => {
-      expect(instance.getByText(/Oranges/)).toBeInTheDocument();
-      expect(instance.getByText(/Apples/)).toBeInTheDocument();
+      expect(instance.getByDisplayValue(/Oranges/)).toBeInTheDocument();
+      expect(instance.getByDisplayValue(/Apples/)).toBeInTheDocument();
       expect(inputBox.value).toBe('');
     });
 
@@ -40,8 +40,18 @@ describe('ShoppingList', () => {
       const deleteButton = instance.getByTestId('delete-item-Oranges');
       fireEvent.click(deleteButton);
 
-      expect(instance.queryByText(/Oranges/)).toBeNull();
-      expect(instance.queryByText(/Apples/)).not.toBeNull();
+      expect(instance.queryByDisplayValue(/Oranges/)).toBeNull();
+      expect(instance.queryByDisplayValue(/Apples/)).not.toBeNull();
+    });
+
+    it('edits item text when input field is edited', () => {
+      const applesInputBox = instance.getByTestId('edit-item-Apples');
+
+      fireEvent.change(applesInputBox, { target: { value: 'Bananas' } });
+
+      expect(instance.queryByDisplayValue(/Oranges/)).not.toBeNull();
+      expect(instance.queryByDisplayValue(/Bananas/)).not.toBeNull();
+      expect(instance.queryByDisplayValue(/Apples/)).toBeNull();
     });
   });
 });
