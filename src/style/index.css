@@ -20,15 +20,7 @@ code {
   --check_yellow: #FABE0E;
 }
 
-h1, h2 {
-  text-align: center;
-}
-
 #wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 26px;
 }
 
 ul, li {

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ListItems from './ListItems';
@@ -17,9 +18,11 @@ const ENTRIES = [
   },
 ];
 
+const props = { entries: ENTRIES, deleteItem: jest.fn(), updateItem: jest.fn() };
+
 describe('ListItems', () => {
   it('renders each item', () => {
-    const { getByDisplayValue } = render(<ListItems entries={ENTRIES} deleteItem={jest.fn()} />);
+    const { getByDisplayValue } = render(<ListItems {...props} />);
 
     expect(getByDisplayValue(/Grapes/)).toBeInTheDocument();
     expect(getByDisplayValue(/Apples/)).toBeInTheDocument();
@@ -28,11 +31,40 @@ describe('ListItems', () => {
 
   it('calls deleteItem when the trash icon is clicked', () => {
     const deleteItem = jest.fn();
-    const { getByTestId } = render(<ListItems entries={ENTRIES} deleteItem={deleteItem} />);
+    const { getByTestId } = render(
+      <ListItems {...props} deleteItem={deleteItem} />,
+    );
 
     fireEvent.click(getByTestId('delete-item-Oranges'));
 
     expect(deleteItem).toHaveBeenCalledTimes(1);
     expect(deleteItem).toHaveBeenCalledWith('item-2');
+  });
+
+  it('calls updateItem when item input is altered', () => {
+    const updateItem = jest.fn();
+    const { getByTestId } = render(
+      <ListItems {...props} updateItem={updateItem} />,
+    );
+
+    const inputBox = getByTestId('edit-item-Grapes');
+
+    fireEvent.change(inputBox, { target: { value: 'Bananas' } });
+
+    expect(updateItem).toHaveBeenCalledTimes(1);
+    expect(updateItem).toHaveBeenCalledWith('Bananas', 'item-0');
+  });
+
+  it('calls keypressHandler when a key is pressed', () => {
+    const keypressHandler = jest.fn();
+    const { getByTestId } = render(
+      <ListItems {...props} keypressHandler={keypressHandler} />,
+    );
+
+    const inputBox = getByTestId('edit-item-Grapes');
+
+    fireEvent.keyDown(inputBox, { key: '13' });
+
+    expect(keypressHandler).toHaveBeenCalledTimes(1);
   });
 });

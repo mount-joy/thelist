@@ -5,7 +5,7 @@ import { faTrash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles.module.css';
 
 const ListItems = ({
-  entries, deleteItem, updateItem, completeItem,
+  entries, deleteItem, updateItem, completeItem, keypressHandler,
 }) => (
   <ul className={styles.list}>
     {entries.filter(({ isCompleted }) => !isCompleted).map(({ key, text, isCompleted }) => (
@@ -16,6 +16,8 @@ const ListItems = ({
           value={text}
           onChange={(e) => updateItem(e.target.value, key)}
           style={{ textDecoration: isCompleted ? 'line-through' : '' }}
+          onKeyDown={keypressHandler}
+          data-testid={`edit-item-${text}`}
         />
         {' '}
         <FontAwesomeIcon

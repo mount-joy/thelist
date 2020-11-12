@@ -1,0 +1,32 @@
+.listHeader {
+    background-color: var(--main_green);
+    box-sizing: border-box;
+    padding: 26px 26px 60px 26px;
+    height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerRow h3,
+.headerRow h4 {
+    margin: 0;
+    color: #FFFFFF;
+    opacity: 0.7;
+    font-weight: 600;
+}
+
+.logo {
+    height: 20px;
+}
+
+.shareIcon {
+    font-size: 20px;
+    color: #FFFFFF;
+}
