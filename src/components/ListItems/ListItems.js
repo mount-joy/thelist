@@ -4,6 +4,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
+
 const ListItems = ({
   entries, deleteItem, updateItem, keypressHandler,
 }) => (

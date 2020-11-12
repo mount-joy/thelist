@@ -26,6 +26,16 @@
     "rules": {
         "react/prop-types": "off",
         "react/jsx-filename-extension": "off",
-        "no-console": "error"
+        "no-console": "error",
+        "jsx-a11y/label-has-associated-control": [
+            "error",
+            {
+                "labelComponents": [],
+                "labelAttributes": [],
+                "controlComponents": [],
+                "assert": "either",
+                "depth": 25
+            }
+        ]
     }
 }
