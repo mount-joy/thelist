@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import ListItems from './ListItems';
 
 const ENTRIES = [
@@ -18,7 +18,12 @@ const ENTRIES = [
   },
 ];
 
-const props = { entries: ENTRIES, deleteItem: jest.fn(), updateItem: jest.fn() };
+const actions = {
+  deleteItemByKey: jest.fn(),
+  updateItemByKey: jest.fn(),
+};
+
+const props = { entries: ENTRIES, actions, keypressHandler: jest.fn() };
 
 describe('ListItems', () => {
   it('renders each item', () => {
@@ -32,29 +37,29 @@ describe('ListItems', () => {
   });
 
   it('calls deleteItem when the trash icon is clicked', () => {
-    const deleteItem = jest.fn();
     const { getByTestId } = render(
-      <ListItems {...props} deleteItem={deleteItem} />,
+      <ListItems {...props} />,
     );
 
     fireEvent.click(getByTestId('delete-item-Oranges'));
 
-    expect(deleteItem).toHaveBeenCalledTimes(1);
-    expect(deleteItem).toHaveBeenCalledWith('item-2');
+    expect(actions.deleteItemByKey).toHaveBeenCalledTimes(1);
+    expect(actions.deleteItemByKey).toHaveBeenCalledWith('item-2');
   });
 
-  it('calls updateItem when item input is altered', () => {
-    const updateItem = jest.fn();
+  it('calls updateItem when item input is altered', async () => {
     const { getByTestId } = render(
-      <ListItems {...props} updateItem={updateItem} />,
+      <ListItems {...props} />,
     );
 
     const inputBox = getByTestId('edit-item-Grapes');
 
     fireEvent.change(inputBox, { target: { value: 'Bananas' } });
 
-    expect(updateItem).toHaveBeenCalledTimes(1);
-    expect(updateItem).toHaveBeenCalledWith('Bananas', 'item-0');
+    await waitFor(() => {
+      expect(actions.updateItemByKey).toHaveBeenCalledTimes(1);
+      expect(actions.updateItemByKey).toHaveBeenCalledWith('Bananas', 'item-0');
+    }, { timeout: 2000 });
   });
 
   it('calls keypressHandler when a key is pressed', () => {

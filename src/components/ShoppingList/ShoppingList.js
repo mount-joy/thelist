@@ -9,40 +9,16 @@ import { visuallyHidden } from '../../style/common.module.css';
 import styles from './styles.module.css';
 
 const ShoppingList = () => {
-  const [items, setItems] = useItems();
+  const [items, actions] = useItems();
   const [text, setText] = useState('');
 
   const addItem = (e) => {
     e.preventDefault();
 
     if (text !== '') {
-      const newItem = {
-        text,
-        key: Date.now(),
-      };
-
-      setItems(items.concat(newItem));
+      actions.newItem(text);
       setText('');
     }
-  };
-
-  const deleteItem = (key) => {
-    const filteredItems = items.filter((item) => item.key !== key);
-    setItems(filteredItems);
-  };
-
-  const updateItem = (updatedValue, key) => {
-    const updatedItems = items.map((item) => {
-      const newItem = item;
-      if (item.key === key) {
-        return {
-          ...item,
-          text: updatedValue,
-        };
-      }
-      return newItem;
-    });
-    setItems(updatedItems);
   };
 
   const keypressHandler = (e) => {
@@ -61,8 +37,7 @@ const ShoppingList = () => {
         </form>
         <ListItems
           entries={items}
-          deleteItem={deleteItem}
-          updateItem={updateItem}
+          actions={actions}
           keypressHandler={keypressHandler}
         />
       </div>
