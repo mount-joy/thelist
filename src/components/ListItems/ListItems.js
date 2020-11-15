@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
+import ListItem from '../ListItem';
 
 const ListItems = ({
   entries, actions, keypressHandler,
@@ -10,13 +11,12 @@ const ListItems = ({
   <ul className={styles.list}>
     {entries.map(({ key, text }) => (
       <li key={key} className={styles.listItem}>
-        <input
-          type="text"
-          id={key}
-          value={text}
-          onChange={(e) => actions.updateItemByKey(e.target.value, key)}
-          onKeyDown={keypressHandler}
-          data-testid={`edit-item-${text}`}
+        <ListItem
+          itemKey={key}
+          text={text}
+          actions={actions}
+          keypressHandler={keypressHandler}
+          testId={`edit-item-${text}`}
         />
         {' '}
         <FontAwesomeIcon
