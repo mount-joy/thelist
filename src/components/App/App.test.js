@@ -17,13 +17,13 @@ describe('App', () => {
     expect(instance.getByText(/[0-9]+ items/)).toBeInTheDocument();
   });
 
-  it('renders the logo', () => {
-    expect(instance.getByTitle('Logo')).toBeInTheDocument();
-  });
+  // it('renders the logo', () => {
+  //   expect(instance.getByTitle('Logo')).toBeInTheDocument();
+  // });
 
-  it('renders the share icon', () => {
-    expect(instance.getByLabelText('Share this list')).toBeInTheDocument();
-  });
+  // it('renders the share icon', () => {
+  //   expect(instance.getByLabelText('Share this list')).toBeInTheDocument();
+  // });
 
   it('renders the box to enter new items', () => {
     expect(instance.getByPlaceholderText('Item Name')).toBeInTheDocument();
