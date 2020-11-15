@@ -23,6 +23,12 @@
     align-items: center;
     margin: 0;
     overflow-x: scroll;
+    border-radius: 20px;
+}
+
+.listSelector ul::-webkit-scrollbar {
+    height: 0px;
+    background: transparent;
 }
 
 .listSelector li {
