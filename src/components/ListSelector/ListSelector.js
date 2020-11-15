@@ -10,6 +10,7 @@ const ListSelector = () => (
       <ul>
         <li className={styles.active}>Shopping List</li>
         <li>To Do List</li>
+        <li>Another To Do List</li>
       </ul>
       <FontAwesomeIcon
         icon={faPlusCircle}

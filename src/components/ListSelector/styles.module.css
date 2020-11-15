@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     margin: 0;
+    overflow-x: scroll;
 }
 
 .listSelector li {
@@ -32,6 +33,8 @@
     font-size: 13px;
     margin-right: 10px;
     opacity: 0.5;
+    flex-grow: 1;
+    flex-shrink: 0;
 }
 
 .listSelector .active {
@@ -40,7 +43,7 @@
 
 .addListIcon {
     font-size: 20px;
-    padding: 0;
+    padding: 0 0 0 10px;
     color: var(--main_green);
     cursor: pointer;
 }
