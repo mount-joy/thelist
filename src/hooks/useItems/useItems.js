@@ -4,13 +4,14 @@ import { get, set } from 'idb-keyval';
 import useListId from './useListId';
 import getActions from './actions';
 import reducer, { initialState } from './reducer';
+import applyMiddleware from './middleware';
 
 export const IDB_KEY = 'items';
 
 const useItems = () => {
   const listId = useListId();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const actions = getActions(dispatch);
+  const actions = getActions(applyMiddleware(dispatch, () => state));
 
   useEffect(() => {
     actions.setListId(listId);

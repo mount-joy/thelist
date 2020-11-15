@@ -4,6 +4,8 @@ export const types = {
   NEW_ITEM: 'NEW_ITEM',
   DELETE_ITEM_BY_KEY: 'DELETE_ITEM_BY_KEY',
   UPDATE_ITEM_BY_KEY: 'UPDATE_ITEM_BY_KEY',
+  STORE_ID: 'STORE_ID',
+  MERGE_ITEMS: 'MERGE_ITEMS',
 };
 
 export const initialState = { items: [], listId: null };
@@ -39,6 +41,27 @@ const reducer = (state, { type, data }) => {
           };
         }),
       };
+    }
+
+    case types.STORE_ID: {
+      const items = state.items.map((item) => {
+        if (item.key !== data.key) {
+          return item;
+        }
+        return {
+          ...item,
+          id: data.id,
+        };
+      });
+      return { ...state, items };
+    }
+
+    case types.MERGE_ITEMS: {
+      const existingIds = state.items.map((item) => item.id);
+      const unknownItems = data.items
+        .filter((item) => !existingIds.includes(item.id))
+        .map((item) => ({ ...item, key: item.id }));
+      return { ...state, items: [...state.items, ...unknownItems] };
     }
 
     default:
