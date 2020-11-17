@@ -19,6 +19,7 @@ const ShoppingList = () => {
       const newItem = {
         text,
         key: Date.now(),
+        isCompleted: false,
       };
 
       setItems(items.concat(newItem));
@@ -45,6 +46,27 @@ const ShoppingList = () => {
     setItems(updatedItems);
   };
 
+  const completeItem = (key) => {
+    const completedItems = items.map((item) => {
+      const newItem = item;
+      if (item.key === key) {
+        if (item.isCompleted === false) {
+          return {
+            ...item,
+            isCompleted: true,
+          };
+        }
+
+        return {
+          ...item,
+          isCompleted: false,
+        };
+      }
+      return newItem;
+    });
+    setItems(completedItems);
+  };
+
   const keypressHandler = (e) => {
     if (e.keyCode === 13) {
       e.target.blur();
@@ -64,6 +86,7 @@ const ShoppingList = () => {
           deleteItem={deleteItem}
           updateItem={updateItem}
           keypressHandler={keypressHandler}
+          completeItem={completeItem}
         />
       </div>
     </div>
