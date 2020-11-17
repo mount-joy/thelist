@@ -12,10 +12,12 @@ const ListSelector = () => (
         <li>To Do List</li>
         <li>Another To Do List</li>
       </ul>
-      <FontAwesomeIcon
-        icon={faPlusCircle}
-        className={styles.addListIcon}
-      />
+      <button type="submit" aria-label="Add list">
+        <FontAwesomeIcon
+          icon={faPlusCircle}
+          className={styles.addListIcon}
+        />
+      </button>
     </div>
   </div>
 );
