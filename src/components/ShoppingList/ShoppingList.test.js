@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, getNodeText } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import ShoppingList from './ShoppingList';
 
 describe('ShoppingList', () => {
