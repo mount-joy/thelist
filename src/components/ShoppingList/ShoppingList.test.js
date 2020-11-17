@@ -3,6 +3,10 @@ import { render, fireEvent } from '@testing-library/react';
 import ShoppingList from './ShoppingList';
 
 describe('ShoppingList', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({ json: jest.fn(() => ({})) });
+  });
+
   it('renders the add button', () => {
     const { getByLabelText } = render(<ShoppingList />);
     const addButton = getByLabelText(/Add/);
@@ -44,7 +48,7 @@ describe('ShoppingList', () => {
       expect(instance.queryByDisplayValue(/Apples/)).not.toBeNull();
     });
 
-    it('edits item text when input field is edited', () => {
+    it('edits item text when input field is edited', async () => {
       const applesInputBox = instance.getByTestId('edit-item-Apples');
 
       fireEvent.change(applesInputBox, { target: { value: 'Bananas' } });
@@ -61,6 +65,15 @@ describe('ShoppingList', () => {
       fireEvent.keyDown(applesInputBox, { keyCode: '13' });
 
       expect(document.activeElement).not.toEqual(applesInputBox);
+    });
+
+    it('completes item move to bottom when completeItem is pressed', async () => {
+      const completeButton = instance.getByTestId('complete-item-Oranges');
+      const itemsBefore = await instance.findAllByDisplayValue(/(Oranges|Apples)/);
+      expect(itemsBefore.map((item) => item.value)).toEqual(['Oranges', 'Apples']);
+      fireEvent.click(completeButton);
+      const itemsAfter = await instance.findAllByDisplayValue(/(Oranges|Apples)/);
+      expect(itemsAfter.map((item) => item.value)).toEqual(['Apples', 'Oranges']);
     });
   });
 });

@@ -1,35 +1,3 @@
 .list {
   margin: 0;
 }
-
-.listItem {
-  background-color: var(--item_grey);
-  color: var(--font_grey);
-  height: 40px;
-  border-radius: 20px;
-  margin-top: 10px;
-  box-sizing: border-box;
-  padding: 0 14px 0 28px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.listItem input {
-  background-color: transparent;
-  border: 0;
-  font-size: 12px;
-  font-weight: 700;
-  flex-grow: 1;
-}
-
-.listItem input:focus {
-  outline: 0;
-  border-bottom: 2px solid var(--main_green);
-  margin-right: 20px;
-}
-
-.deleteIcon {
-  cursor: pointer;
-  font-size: 15px;
-}

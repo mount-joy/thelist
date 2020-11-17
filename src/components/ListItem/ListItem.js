@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
-const ListItem = ({
-  itemKey, text, actions, keypressHandler, testId,
-}) => {
+import styles from './styles.module.css';
+
+const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
   const [value, setValue] = useState(text);
   const mounted = useRef(false);
 
@@ -20,14 +22,36 @@ const ListItem = ({
   }, [value, itemKey]);
 
   return (
-    <input
-      type="text"
-      id={itemKey}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onKeyDown={keypressHandler}
-      data-testid={testId}
-    />
+    <li key={itemKey} className={styles.listItem}>
+      <input
+        type="text"
+        id={itemKey}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        style={{ textDecoration: isCompleted ? 'line-through' : '' }}
+        onKeyDown={keypressHandler}
+        data-testid={`edit-item-${text}`}
+      />
+      {' '}
+      <FontAwesomeIcon
+        icon={faTrash}
+        onClick={() => actions.deleteItemByKey(itemKey)}
+        role="button"
+        aria-label={`Delete item: ${text}`}
+        data-testid={`delete-item-${text}`}
+        tabIndex={0}
+        className={styles.deleteIcon}
+      />
+      <FontAwesomeIcon
+        icon={faCheckCircle}
+        onClick={() => actions.toggleCompletionByKey(itemKey)}
+        role="button"
+        aria-label={`Added item: ${text}`}
+        data-testid={`complete-item-${text}`}
+        tabIndex={0}
+        className={isCompleted ? (styles.completedIcon) : (styles.completeIcon)}
+      />
+    </li>
   );
 };
 

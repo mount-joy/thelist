@@ -16,9 +16,8 @@ code {
   --item_grey: #F8F8F8;
   --font_grey: #5B5B5B;
   --main_green: #8AB661;
-}
-
-#wrapper {
+  --check_grey: #979797;
+  --check_yellow: #FABE0E;
 }
 
 ul, li {

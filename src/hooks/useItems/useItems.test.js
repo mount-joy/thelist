@@ -7,9 +7,7 @@ import useItems from './useItems';
 const WrapperComponent = forwardRef((props, ref) => {
   const [items, actions] = useItems();
 
-  useImperativeHandle(ref, () => ({
-    actions,
-  }));
+  useImperativeHandle(ref, () => ({ actions }));
 
   return <div data-testid="items">{JSON.stringify(items)}</div>;
 });
@@ -253,7 +251,7 @@ describe('useItems', () => {
     expect(getItems(instance)).toEqual([
       { id: 's-1234', key: 's-1234', text: 'Apples' },
       { id: 's-5678', key: 's-5678', text: 'Bananas' },
-      { id: 'new-item-id', key: expect.any(String), text: 'Carrots' },
+      { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
     ]);
 
     expect(mockFetch).toHaveBeenCalledWith(
