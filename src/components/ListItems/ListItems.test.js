@@ -18,13 +18,13 @@ const ENTRIES = [
   },
 ];
 
-const props = { entries: ENTRIES, deleteItem: jest.fn(), updateItem: jest.fn() };
+const props = {
+  entries: ENTRIES, deleteItem: jest.fn(), updateItem: jest.fn(), completeItem: jest.fn(),
+};
 
 describe('ListItems', () => {
   it('renders each item', () => {
-    const { getByDisplayValue } = render(
-      <ListItems {...props} />,
-    );
+    const { getByDisplayValue } = render(<ListItems {...props} />);
 
     expect(getByDisplayValue(/Grapes/)).toBeInTheDocument();
     expect(getByDisplayValue(/Apples/)).toBeInTheDocument();
@@ -68,5 +68,17 @@ describe('ListItems', () => {
     fireEvent.keyDown(inputBox, { key: '13' });
 
     expect(keypressHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls completeItem when check icon is pressed', () => {
+    const completeItem = jest.fn();
+    const { getByTestId } = render(
+      <ListItems {...props} completeItem={completeItem} />,
+    );
+
+    fireEvent.click(getByTestId('complete-item-Apples'));
+
+    expect(completeItem).toHaveBeenCalledTimes(1);
+    expect(completeItem).toHaveBeenCalledWith('item-1');
   });
 });

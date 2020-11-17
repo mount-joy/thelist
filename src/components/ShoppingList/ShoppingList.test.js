@@ -62,5 +62,14 @@ describe('ShoppingList', () => {
 
       expect(document.activeElement).not.toEqual(applesInputBox);
     });
+
+    it('completes item move to bottom when completeItem is pressed', async () => {
+      const completeButton = instance.getByTestId('complete-item-Oranges');
+      const itemsBefore = await instance.findAllByDisplayValue(/(Oranges|Apples)/);
+      expect(itemsBefore.map((item) => item.value)).toEqual(['Oranges', 'Apples']);
+      fireEvent.click(completeButton);
+      const itemsAfter = await instance.findAllByDisplayValue(/(Oranges|Apples)/);
+      expect(itemsAfter.map((item) => item.value)).toEqual(['Apples', 'Oranges']);
+    });
   });
 });
