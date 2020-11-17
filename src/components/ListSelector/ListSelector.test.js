@@ -16,7 +16,8 @@ describe('ListSelector', () => {
     expect(addButton.type).toEqual('submit');
   });
 
-  it('displays example lists', () => {
-    expect(instance.findAllByText(/List/)).not.toBeNull();
+  it('displays example lists', async () => {
+    const listItems = await instance.findAllByText(/List/);
+    expect(listItems.length).toEqual(3);
   });
 });
