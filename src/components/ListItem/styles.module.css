@@ -1,7 +1,7 @@
 .listItem {
   background-color: var(--item_grey);
-  height: 50px;
-  border-radius: 25px;
+  height: 44px;
+  border-radius: 22px;
   margin-top: 10px;
   box-sizing: border-box;
   padding: 0 10px 0 28px;
@@ -11,6 +11,9 @@
 }
 
 .listItem input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   background-color: transparent;
   border: 0;
   font-size: 16px;
@@ -30,6 +33,7 @@
   cursor: pointer;
   font-size: 15px;
   margin-right: 20px;
+  color: var(--font_grey);
 }
 
 .completeIcon,
