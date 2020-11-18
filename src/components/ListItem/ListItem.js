@@ -13,7 +13,6 @@ const ListItem = ({
       id={itemKey}
       value={text}
       onChange={(e) => updateItem(e.target.value, itemKey)}
-      style={{ textDecoration: isCompleted ? 'line-through' : '' }}
       onKeyDown={keypressHandler}
       data-testid={`edit-item-${text}`}
     />

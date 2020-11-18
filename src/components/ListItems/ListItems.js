@@ -19,7 +19,7 @@ const ListItems = ({
         isCompleted={isCompleted}
       />
     ))}
-    <h3>Added items</h3>
+    <h4 className={styles.completedHeading}>Completed</h4>
     {entries.filter(({ isCompleted }) => isCompleted).map(({ key, text, isCompleted }) => (
       <ListItem
         deleteItem={deleteItem}
