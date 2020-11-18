@@ -29,6 +29,6 @@ describe('App', () => {
   });
 
   it('renders the box to enter new items', () => {
-    expect(instance.getByPlaceholderText('Item Name')).toBeInTheDocument();
+    expect(instance.getByPlaceholderText('Add something to the list...')).toBeInTheDocument();
   });
 });
