@@ -9,62 +9,16 @@ import { visuallyHidden } from '../../style/common.module.css';
 import styles from './styles.module.css';
 
 const ShoppingList = () => {
-  const [items, setItems] = useItems();
+  const [items, actions] = useItems();
   const [text, setText] = useState('');
 
   const addItem = (e) => {
     e.preventDefault();
 
     if (text !== '') {
-      const newItem = {
-        text,
-        key: Date.now(),
-        isCompleted: false,
-      };
-
-      setItems(items.concat(newItem));
+      actions.newItem(text);
       setText('');
     }
-  };
-
-  const deleteItem = (key) => {
-    const filteredItems = items.filter((item) => item.key !== key);
-    setItems(filteredItems);
-  };
-
-  const updateItem = (updatedValue, key) => {
-    const updatedItems = items.map((item) => {
-      const newItem = item;
-      if (item.key === key) {
-        return {
-          ...item,
-          text: updatedValue,
-        };
-      }
-      return newItem;
-    });
-    setItems(updatedItems);
-  };
-
-  const completeItem = (key) => {
-    const completedItems = items.map((item) => {
-      const newItem = item;
-      if (item.key === key) {
-        if (item.isCompleted === false) {
-          return {
-            ...item,
-            isCompleted: true,
-          };
-        }
-
-        return {
-          ...item,
-          isCompleted: false,
-        };
-      }
-      return newItem;
-    });
-    setItems(completedItems);
   };
 
   const keypressHandler = (e) => {
@@ -83,10 +37,8 @@ const ShoppingList = () => {
         </form>
         <ListItems
           entries={items}
-          deleteItem={deleteItem}
-          updateItem={updateItem}
+          actions={actions}
           keypressHandler={keypressHandler}
-          completeItem={completeItem}
         />
       </div>
     </div>
