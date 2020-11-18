@@ -77,7 +77,7 @@ const ShoppingList = () => {
     <div className={styles.wrapper}>
       <div className={styles.listElements}>
         <form onSubmit={addItem} className={styles.newItem}>
-          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Item Name" id="item-name" />
+          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add something to the list..." id="item-name" />
           <label htmlFor="item-name" className={visuallyHidden}>Item Name</label>
           <button type="submit" aria-label="Add item"><FontAwesomeIcon icon={faPlusCircle} /></button>
         </form>
