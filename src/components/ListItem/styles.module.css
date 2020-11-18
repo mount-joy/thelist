@@ -1,8 +1,7 @@
 .listItem {
   background-color: var(--item_grey);
-  color: var(--font_grey);
-  height: 40px;
-  border-radius: 20px;
+  height: 50px;
+  border-radius: 25px;
   margin-top: 10px;
   box-sizing: border-box;
   padding: 0 10px 0 28px;
@@ -14,10 +13,11 @@
 .listItem input {
   background-color: transparent;
   border: 0;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   flex-grow: 1;
   cursor: pointer;
+  color: var(--font_grey);
 }
 
 .listItem input:focus {
