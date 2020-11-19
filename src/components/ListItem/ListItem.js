@@ -4,7 +4,7 @@ import { faTrash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEditable, }) => {
+const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEditable }) => {
   const [value, setValue] = useState(text);
   const mounted = useRef(false);
 
