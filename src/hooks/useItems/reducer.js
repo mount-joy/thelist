@@ -80,7 +80,7 @@ const reducer = (state, { type, data }) => {
           }
           return {
             ...item,
-            isEditable: !item.isEditable,
+            isEditable: true,
           };
         }),
       };

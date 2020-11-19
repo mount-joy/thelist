@@ -22,20 +22,15 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEdit
   }, [value, itemKey]);
 
   return (
-    <li
-      key={itemKey}
-      className={styles.listItem}
-    >
+    <li key={itemKey} className={styles.listItem}>
       <input
         type="text"
         id={itemKey}
         value={value}
         onClick={() => actions.toggleEditModeByKey(itemKey)}
         onChange={(e) => setValue(e.target.value)}
-        /* onBlur={() => actions.toggleEditModeByKey(itemKey)} */
         onKeyDown={keypressHandler}
         data-testid={`edit-item-${text}`}
-        style={{ borderBottom: isEditable ? '2px solid var(--main_green)' : 'none' }}
       />
       {' '}
       <FontAwesomeIcon
