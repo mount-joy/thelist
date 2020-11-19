@@ -4,7 +4,7 @@ import { faTrash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
+const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEditable, }) => {
   const [value, setValue] = useState(text);
   const mounted = useRef(false);
 
@@ -22,15 +22,20 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
   }, [value, itemKey]);
 
   return (
-    <li key={itemKey} className={styles.listItem}>
+    <li
+      key={itemKey}
+      className={styles.listItem}
+    >
       <input
         type="text"
         id={itemKey}
         value={value}
+        onClick={() => actions.toggleEditModeByKey(itemKey)}
         onChange={(e) => setValue(e.target.value)}
-        style={{ textDecoration: isCompleted ? 'line-through' : '' }}
+        /* onBlur={() => actions.toggleEditModeByKey(itemKey)} */
         onKeyDown={keypressHandler}
         data-testid={`edit-item-${text}`}
+        style={{ borderBottom: isEditable ? '2px solid var(--main_green)' : 'none' }}
       />
       {' '}
       <FontAwesomeIcon
@@ -40,7 +45,7 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
         aria-label={`Delete item: ${text}`}
         data-testid={`delete-item-${text}`}
         tabIndex={0}
-        className={styles.deleteIcon}
+        className={isEditable ? (styles.deleteIcon) : (styles.hiddenDeleteIcon)}
       />
       <FontAwesomeIcon
         icon={faCheckCircle}
@@ -50,6 +55,7 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
         data-testid={`complete-item-${text}`}
         tabIndex={0}
         className={isCompleted ? (styles.completedIcon) : (styles.completeIcon)}
+        style={{ display: isEditable ? 'none' : 'block' }}
       />
     </li>
   );
