@@ -6,9 +6,9 @@ import getActions from './actions';
 import reducer, { initialState } from './reducer';
 import applyMiddleware from './middleware';
 
-export const IDB_KEY = 'items';
+export const IDB_KEY = 'thelist-state';
 
-const useItems = () => {
+const useAppState = () => {
   const listId = useListId();
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions = getActions(applyMiddleware(dispatch, () => state));
@@ -23,7 +23,7 @@ const useItems = () => {
     (async () => {
       const val = await get(IDB_KEY);
       if (val != null && mounted) {
-        actions.setItems(val);
+        actions.setState(val);
       }
     })();
 
@@ -31,10 +31,10 @@ const useItems = () => {
   }, []);
 
   useEffect(() => {
-    set(IDB_KEY, state.items);
-  }, [state.items]);
+    set(IDB_KEY, state);
+  }, [state]);
 
-  return [state.items, actions];
+  return [state, actions];
 };
 
-export default useItems;
+export default useAppState;
