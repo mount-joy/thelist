@@ -4,7 +4,7 @@ describe('createList', () => {
   let mockFetch;
 
   beforeEach(() => {
-    mockFetch = jest.fn(async () => ({ json: async () => ({ Id: 'new-list-id' }) }));
+    mockFetch = jest.fn(async () => ({ json: async () => ({ Id: 'new-list-id', Name: 'list-name' }) }));
     global.fetch = mockFetch;
   });
 
