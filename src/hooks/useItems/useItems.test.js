@@ -251,7 +251,7 @@ describe('useItems', () => {
     expect(getItems(instance)).toEqual([
       { id: 's-1234', key: 's-1234', text: 'Apples' },
       { id: 's-5678', key: 's-5678', text: 'Bananas' },
-      { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false, isEditable: false },
+      { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
     ]);
 
     expect(mockFetch).toHaveBeenCalledWith(

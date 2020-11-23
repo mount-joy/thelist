@@ -5,7 +5,6 @@ export const types = {
   DELETE_ITEM_BY_KEY: 'DELETE_ITEM_BY_KEY',
   UPDATE_ITEM_BY_KEY: 'UPDATE_ITEM_BY_KEY',
   TOGGLE_COMPLETION_BY_KEY: 'TOGGLE_COMPLETION_BY_KEY',
-  TOGGLE_EDIT_MODE_BY_KEY: 'TOGGLE_EDIT_MODE_BY_KEY',
   STORE_ID: 'STORE_ID',
   MERGE_ITEMS: 'MERGE_ITEMS',
 };
@@ -25,7 +24,6 @@ const reducer = (state, { type, data }) => {
       const newItem = {
         id,
         isCompleted: false,
-        isEditable: false,
         key,
         text,
       };
@@ -62,25 +60,6 @@ const reducer = (state, { type, data }) => {
           return {
             ...item,
             isCompleted: !item.isCompleted,
-          };
-        }),
-      };
-    }
-
-    case types.TOGGLE_EDIT_MODE_BY_KEY: {
-      const { key } = data;
-      return {
-        ...state,
-        items: state.items.map((item) => {
-          if (item.key !== key) {
-            return {
-              ...item,
-              isEditable: false,
-            };
-          }
-          return {
-            ...item,
-            isEditable: true,
           };
         }),
       };

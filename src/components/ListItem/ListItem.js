@@ -4,8 +4,9 @@ import { faTrash, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEditable }) => {
+const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
   const [value, setValue] = useState(text);
+  const [isBeingEdited, setIsBeingEdited] = useState();
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -27,31 +28,38 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted, isEdit
         type="text"
         id={itemKey}
         value={value}
-        onClick={() => actions.toggleEditModeByKey(itemKey)}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={keypressHandler}
+        onFocus={() => setIsBeingEdited(true)}
+        onBlur={() => setTimeout(() => setIsBeingEdited(false), 90)}
         data-testid={`edit-item-${text}`}
       />
       {' '}
-      <FontAwesomeIcon
-        icon={faTrash}
-        onClick={() => actions.deleteItemByKey(itemKey)}
-        role="button"
-        aria-label={`Delete item: ${text}`}
-        data-testid={`delete-item-${text}`}
-        tabIndex={0}
-        className={isEditable ? (styles.deleteIcon) : (styles.hiddenDeleteIcon)}
-      />
-      <FontAwesomeIcon
-        icon={faCheckCircle}
-        onClick={() => actions.toggleCompletionByKey(itemKey)}
-        role="button"
-        aria-label={`Added item: ${text}`}
-        data-testid={`complete-item-${text}`}
-        tabIndex={0}
-        className={isCompleted ? (styles.completedIcon) : (styles.completeIcon)}
-        style={{ display: isEditable ? 'none' : 'block' }}
-      />
+      {isBeingEdited ? (
+        <>
+          <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => actions.deleteItemByKey(itemKey)}
+            role="button"
+            aria-label={`Delete item: ${text}`}
+            data-testid={`delete-item-${text}`}
+            tabIndex={0}
+            className={styles.deleteIcon}
+          />
+        </>
+      ) : (
+        <>
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            onClick={() => actions.toggleCompletionByKey(itemKey)}
+            role="button"
+            aria-label={`Added item: ${text}`}
+            data-testid={`complete-item-${text}`}
+            tabIndex={0}
+            className={isCompleted ? (styles.completedIcon) : (styles.completeIcon)}
+          />
+        </>
+      )}
     </li>
   );
 };
