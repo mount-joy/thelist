@@ -50,6 +50,15 @@ const ListItem = ({ actions, keypressHandler, itemKey, text, isCompleted }) => {
       ) : (
         <>
           <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => actions.deleteItemByKey(itemKey)}
+            role="button"
+            aria-label={`Delete item: ${text}`}
+            data-testid={`delete-item-${text}`}
+            tabIndex={0}
+            className={styles.hiddenDeleteIcon}
+          />
+          <FontAwesomeIcon
             icon={faCheckCircle}
             onClick={() => actions.toggleCompletionByKey(itemKey)}
             role="button"
