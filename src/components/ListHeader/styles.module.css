@@ -49,6 +49,12 @@
   cursor: pointer;
 }
 
+.shareIcon:focus,
+.pencilIcon:focus {
+  outline: none;
+  border: 0;
+}
+
 .clockIcon,
 .deleteListIcon {
   margin-right: 10px;
