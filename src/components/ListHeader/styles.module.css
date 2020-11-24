@@ -9,10 +9,12 @@
   justify-content: space-between;
 }
 
-.headerRow {
+.headerRow,
+.subheadingRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 15px 0;
 }
 
 .headerRow h3,
@@ -36,6 +38,7 @@
 .shareIcon {
   font-size: 20px;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
 .pencilIcon {
@@ -52,7 +55,6 @@
 }
 
 .subheadingRow {
-  display: flex;
   justify-content: center;
 }
 
