@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faShareAlt, faCopy, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as Logo } from '../../static/logo.svg';
 
 import styles from './styles.module.css';
@@ -31,15 +31,53 @@ const ListHeader = () => {
           onClick={shareList}
         />
       </div>
-      <input
-        type="text"
-        value="https:thelist.app"
-        id="listText"
-        onClick={shareList}
-      />
       <div className={styles.headerRow}>
-        <h3>Shopping List</h3>
+        <h3>
+          Shopping List
+          <FontAwesomeIcon
+            icon={faPencilAlt}
+            className={styles.pencilIcon}
+            title="Edit list name"
+            tabIndex={0}
+          />
+        </h3>
         <h4>15 items</h4>
+      </div>
+      <div className={styles.subheadingRow}>
+        <h4>
+          <FontAwesomeIcon
+            icon={faClock}
+            className={styles.clockIcon}
+          />
+          Created 1st Jan 2020
+        </h4>
+      </div>
+      <div className={styles.copyList}>
+        <h5>Copy -</h5>
+        <input
+          type="text"
+          spellCheck="false"
+          value="https:thelist.app"
+          id="listText"
+          onClick={shareList}
+        />
+        <FontAwesomeIcon
+          icon={faCopy}
+          className={styles.copyIcon}
+          title="Copy list"
+          tabIndex={0}
+          onClick={shareList}
+        />
+      </div>
+      <div
+        className={styles.deleteList}
+        title="Delete list"
+      >
+        <FontAwesomeIcon
+          icon={faTrash}
+          className={styles.deleteListIcon}
+        />
+        Delete List
       </div>
     </div>
   );
