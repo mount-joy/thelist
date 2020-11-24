@@ -2,7 +2,6 @@
   background-color: var(--main_green);
   box-sizing: border-box;
   padding: 26px 26px 60px 26px;
-  /* height: 165px; */
   height: 100%;
   display: flex;
   flex-direction: column;

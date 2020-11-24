@@ -57,7 +57,7 @@ const ListHeader = () => {
             </h4>
           </div>
           <div className={styles.copyList}>
-            <h5>Copy -</h5>
+            <h5>Share -</h5>
             <input
               type="text"
               spellCheck="false"
