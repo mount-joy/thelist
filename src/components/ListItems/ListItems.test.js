@@ -40,6 +40,7 @@ describe('ListItems', () => {
       <ListItems {...props} />,
     );
 
+    fireEvent.click(getByTestId('edit-item-Oranges'));
     fireEvent.click(getByTestId('delete-item-Oranges'));
 
     expect(actions.deleteItemByKey).toHaveBeenCalledTimes(1);

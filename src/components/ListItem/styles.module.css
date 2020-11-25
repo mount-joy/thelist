@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
 .listItem input {
@@ -21,19 +22,27 @@
   flex-grow: 1;
   cursor: pointer;
   color: var(--font_grey);
+  padding: 10px 0;
 }
 
 .listItem input:focus {
   outline: 0;
   border-bottom: 2px solid var(--main_green);
-  margin-right: 20px;
+  padding: 0;
 }
 
 .deleteIcon {
+  display: block;
   cursor: pointer;
   font-size: 15px;
-  margin-right: 20px;
+  padding-right: 4px;
+  margin-left: 24px;
+  outline: none;
   color: var(--font_grey);
+}
+
+.hiddenDeleteIcon {
+  display: none;
 }
 
 .completeIcon,

@@ -9,15 +9,16 @@ const ListItems = ({
   entries, actions, keypressHandler,
 }) => (
   <ul className={styles.list}>
-    {entries.filter(({ isCompleted }) => !isCompleted).map(({ key, text, isCompleted }) => (
-      <ListItem
-        actions={actions}
-        isCompleted={isCompleted}
-        itemKey={key}
-        key={key}
-        keypressHandler={keypressHandler}
-        text={text}
-      />
+    {entries.filter(({ isCompleted }) => !isCompleted).map(({
+      key, text, isCompleted }) => (
+        <ListItem
+          actions={actions}
+          isCompleted={isCompleted}
+          itemKey={key}
+          key={key}
+          keypressHandler={keypressHandler}
+          text={text}
+        />
     ))}
     <div className={styles.completedWrapper}>
       <FontAwesomeIcon
