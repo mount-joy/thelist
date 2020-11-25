@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import useItems from '../../hooks/useItems';
 import ListItems from '../ListItems';
 import { visuallyHidden } from '../../style/common.module.css';
 
 import styles from './styles.module.css';
 
-const ShoppingList = () => {
-  const [items, actions] = useItems();
+const ShoppingList = ({ actions, items }) => {
   const [text, setText] = useState('');
 
   const addItem = (e) => {
