@@ -5,7 +5,7 @@ import App from './App';
 
 describe('App', () => {
   const inputBoxPlaceholderText = 'Add something to the list...';
-  
+
   describe('displays all expected parts', () => {
     let instance;
     beforeEach(() => {
