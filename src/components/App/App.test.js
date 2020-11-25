@@ -4,6 +4,8 @@ import { fireEvent, getNodeText, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
+  const inputBoxPlaceholderText = 'Add something to the list...';
+  
   describe('displays all expected parts', () => {
     let instance;
     beforeEach(() => {
@@ -30,7 +32,7 @@ describe('App', () => {
     });
 
     it('renders the box to enter new items', () => {
-      expect(instance.getByPlaceholderText('Item Name')).toBeInTheDocument();
+      expect(instance.getByPlaceholderText(inputBoxPlaceholderText)).toBeInTheDocument();
     });
   });
 
@@ -42,7 +44,7 @@ describe('App', () => {
       instance = render(<App />);
       const { getByPlaceholderText, container } = instance;
 
-      inputBox = getByPlaceholderText('Item Name');
+      inputBox = getByPlaceholderText(inputBoxPlaceholderText);
       const form = container.querySelector('form');
 
       fireEvent.change(inputBox, { target: { value: 'Oranges' } });

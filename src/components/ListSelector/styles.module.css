@@ -4,7 +4,7 @@
     width: 100%;
     background-color: #FFFFFF;
     box-sizing: border-box;
-    padding: 8px 26px;
+    padding: 15px 26px;
     box-shadow: 0px -5px 10px #0000000A;
 }
 
@@ -14,8 +14,8 @@
     align-items: center;
     background-color: var(--item_grey);
     box-sizing: border-box;
-    padding: 6px 10px 6px 6px;
-    border-radius: 20px;
+    padding: 10px;
+    border-radius: 30px;
 }
 
 .listSelector ul {
@@ -32,15 +32,16 @@
 }
 
 .listSelector li {
-    padding: 5px 26px;
+    padding: 6px 26px;
     border-radius: 20px;
     background-color: var(--main_green);
     color: #FFFFFF;
-    font-size: 13px;
+    font-size: 16px;
     margin-right: 10px;
     opacity: 0.5;
     flex-grow: 1;
     flex-shrink: 0;
+    font-weight: 600;
 }
 
 .listSelector .active {
