@@ -24,7 +24,7 @@ describe('ShoppingList', () => {
       instance = render(<ShoppingList />);
       const { getByPlaceholderText, container } = instance;
 
-      inputBox = getByPlaceholderText('Item Name');
+      inputBox = getByPlaceholderText('Add something to the list...');
       const form = container.querySelector('form');
 
       fireEvent.change(inputBox, { target: { value: 'Oranges' } });
