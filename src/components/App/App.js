@@ -3,15 +3,15 @@ import React from 'react';
 import ListHeader from '../ListHeader';
 import ShoppingList from '../ShoppingList';
 import ListSelector from '../ListSelector';
-import useItems from '../../hooks/useItems';
+import useAppState from '../../hooks/useAppState';
 
 const App = () => {
-  const [items, actions] = useItems();
+  const [state, actions] = useAppState();
 
   return (
     <>
       <ListHeader />
-      <ShoppingList items={items} actions={actions} />
+      <ShoppingList items={state.items} actions={actions} />
       <ListSelector />
     </>
   );
