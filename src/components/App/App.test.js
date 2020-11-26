@@ -76,7 +76,7 @@ describe('App', () => {
       });
     });
 
-    it('displays the new items', async () => {
+    it('displays the new items', () => {
       expect(instance.getByDisplayValue(/Oranges/)).toBeInTheDocument();
       expect(instance.getByDisplayValue(/Apples/)).toBeInTheDocument();
       expect(inputBox.value).toBe('');
