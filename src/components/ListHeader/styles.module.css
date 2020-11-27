@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: all 1s;
 }
 
 .headerRow,
@@ -61,6 +62,14 @@
 
 .subheadingRow {
   justify-content: center;
+}
+
+.displayListDetails {
+  display: block;
+}
+
+.hideListDetails {
+  display: none;
 }
 
 .copyList,

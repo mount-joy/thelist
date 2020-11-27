@@ -30,7 +30,7 @@ const ListHeader = () => {
           className={styles.shareIcon}
           title="Share this list"
           tabIndex={0}
-          onClick={() => showListDetails(!listDetailsShown)}
+          onClick={shareList}
         />
       </div>
       <div className={styles.headerRow}>
@@ -41,52 +41,49 @@ const ListHeader = () => {
             className={styles.pencilIcon}
             title="Edit list name"
             tabIndex={0}
+            onClick={() => showListDetails(!listDetailsShown)}
           />
         </h3>
         <h4>15 items</h4>
       </div>
-      {listDetailsShown ? (
-        <>
-          <div className={styles.subheadingRow}>
-            <h4>
-              <FontAwesomeIcon
-                icon={faClock}
-                className={styles.clockIcon}
-              />
-              Created 1st Jan 2020
-            </h4>
-          </div>
-          <div className={styles.copyList}>
-            <h5>Share -</h5>
-            <input
-              type="text"
-              spellCheck="false"
-              value="https:thelist.app"
-              id="listText"
-              onClick={shareList}
-            />
+      <div className={listDetailsShown ? (styles.displayListDetails) : (styles.hideListDetails)}>
+        <div className={styles.subheadingRow}>
+          <h4>
             <FontAwesomeIcon
-              icon={faCopy}
-              className={styles.copyIcon}
-              title="Copy list"
-              tabIndex={0}
-              onClick={shareList}
+              icon={faClock}
+              className={styles.clockIcon}
             />
-          </div>
-          <div
-            className={styles.deleteList}
-            title="Delete list"
-          >
-            <FontAwesomeIcon
-              icon={faTrash}
-              className={styles.deleteListIcon}
-            />
-            Delete List
-          </div>
-        </>
-      ) : (
-        null
-      )}
+            Created 1st Jan 2020
+          </h4>
+        </div>
+        <div className={styles.copyList}>
+          <h5>Share -</h5>
+          <input
+            type="text"
+            spellCheck="false"
+            value="https:thelist.app"
+            id="listText"
+            onClick={shareList}
+          />
+          <FontAwesomeIcon
+            icon={faCopy}
+            className={styles.copyIcon}
+            title="Copy list"
+            tabIndex={0}
+            onClick={shareList}
+          />
+        </div>
+        <div
+          className={styles.deleteList}
+          title="Delete list"
+        >
+          <FontAwesomeIcon
+            icon={faTrash}
+            className={styles.deleteListIcon}
+          />
+          Delete List
+        </div>
+      </div>
     </div>
   );
 };
