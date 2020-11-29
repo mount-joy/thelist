@@ -110,11 +110,11 @@ const reducer = (state, { type, data }) => {
     }
 
     case types.STORE_ID: {
-      const { key, id } = data;
+      const { key, id, listId } = data;
       return {
         ...state,
-        lists: state.lists.map((list, index) => {
-          if (index !== state.index) {
+        lists: state.lists.map((list) => {
+          if (list.id !== listId) {
             return list;
           }
           return {

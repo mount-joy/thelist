@@ -37,8 +37,9 @@ const applyMiddleware = (dispatch, getState) => (action) => {
     case types.NEW_ITEM: {
       const { key, text } = data;
       const state = getState();
-      createItem(selectListId(state), text)
-        .then((id) => dispatch({ type: types.STORE_ID, data: { key, id } }));
+      const listId = selectListId(state);
+      createItem(listId, text)
+        .then((id) => dispatch({ type: types.STORE_ID, data: { key, id, listId } }));
       break;
     }
 
