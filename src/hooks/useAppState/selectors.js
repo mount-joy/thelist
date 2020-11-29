@@ -1,3 +1,3 @@
-export const selectItems = (state) => state.items[state.index] ?? [];
+export const selectItems = (state) => state.lists[state.index]?.items ?? [];
 export const selectLists = (state) => state.lists ?? [];
 export const selectListId = (state) => state.lists[state.index]?.id ?? null;

@@ -10,7 +10,7 @@ export const types = {
   MERGE_ITEMS: 'MERGE_ITEMS',
 };
 
-export const initialState = { items: [], lists: [], index: 0 };
+export const initialState = { lists: [], index: 0 };
 
 const reducer = (state, { type, data }) => {
   switch (type) {
@@ -18,8 +18,7 @@ const reducer = (state, { type, data }) => {
       const { key, name } = data;
       return {
         ...state,
-        items: [...state.items, []],
-        lists: [...state.lists, { key, name }],
+        lists: [...state.lists, { key, name, items: [] }],
       };
     }
 
@@ -36,11 +35,14 @@ const reducer = (state, { type, data }) => {
       };
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== state.index) {
-            return items;
+            return list;
           }
-          return [...items, newItem];
+          return {
+            ...list,
+            items: [...list.items, newItem],
+          };
         }),
       };
     }
@@ -48,11 +50,14 @@ const reducer = (state, { type, data }) => {
     case types.DELETE_ITEM_BY_KEY:
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== state.index) {
-            return items;
+            return list;
           }
-          return items.filter(({ key }) => key !== data.key);
+          return {
+            ...list,
+            items: list.items.filter(({ key }) => key !== data.key),
+          };
         }),
       };
 
@@ -60,19 +65,22 @@ const reducer = (state, { type, data }) => {
       const { key, text } = data;
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== state.index) {
-            return items;
+            return list;
           }
-          return items.map((item) => {
-            if (item.key !== key) {
-              return item;
-            }
-            return {
-              ...item,
-              text,
-            };
-          });
+          return {
+            ...list,
+            items: list.items.map((item) => {
+              if (item.key !== key) {
+                return item;
+              }
+              return {
+                ...item,
+                text,
+              };
+            }),
+          };
         }),
       };
     }
@@ -81,19 +89,22 @@ const reducer = (state, { type, data }) => {
       const { key } = data;
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== state.index) {
-            return items;
+            return list;
           }
-          return items.map((item) => {
-            if (item.key !== key) {
-              return item;
-            }
-            return {
-              ...item,
-              isCompleted: !item.isCompleted,
-            };
-          });
+          return {
+            ...list,
+            items: list.items.map((item) => {
+              if (item.key !== key) {
+                return item;
+              }
+              return {
+                ...item,
+                isCompleted: !item.isCompleted,
+              };
+            }),
+          };
         }),
       };
     }
@@ -102,19 +113,22 @@ const reducer = (state, { type, data }) => {
       const { key, id } = data;
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== state.index) {
-            return items;
+            return list;
           }
-          return items.map((item) => {
-            if (item.key !== key) {
-              return item;
-            }
-            return {
-              ...item,
-              id,
-            };
-          });
+          return {
+            ...list,
+            items: list.items.map((item) => {
+              if (item.key !== key) {
+                return item;
+              }
+              return {
+                ...item,
+                id,
+              };
+            }),
+          };
         }),
       };
     }
@@ -138,18 +152,21 @@ const reducer = (state, { type, data }) => {
     case types.MERGE_ITEMS: {
       const { listId } = data;
       const listIndex = state.lists.findIndex((list) => list.id === listId);
-      const existingIds = state.items[listIndex]?.map((item) => item.id);
+      const existingIds = state.lists[listIndex]?.items.map((item) => item.id);
       const unknownItems = data.items
         .filter((item) => !existingIds.includes(item.id))
         .map((item) => ({ ...item, key: item.id }));
 
       return {
         ...state,
-        items: state.items.map((items, index) => {
+        lists: state.lists.map((list, index) => {
           if (index !== listIndex) {
-            return items;
+            return list;
           }
-          return [...items, ...unknownItems];
+          return {
+            ...list,
+            items: [...list.items, ...unknownItems],
+          };
         }),
       };
     }

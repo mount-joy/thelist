@@ -24,13 +24,15 @@ const renderAndHydrateComponent = async () => {
 
   const state = {
     index: 0,
-    items: [
-      [
+    lists: [{
+      id: 'list-id',
+      key: 'list-key',
+      name: 'Shopping List',
+      items: [
         { id: 's-1234', key: 's-1234', text: 'Apples' },
         { id: 's-5678', key: 's-5678', text: 'Bananas' },
       ],
-    ],
-    lists: [{ id: 'list-id', key: 'list-key', name: 'Shopping List' }],
+    }],
   };
 
   await act(async () => {
@@ -85,7 +87,7 @@ describe('useAppState', () => {
   it('uses the default value the first time and creates a list', async () => {
     const instance = render(<WrapperComponent />);
 
-    expect(getState(instance)).toEqual({ items: [], lists: [], index: 0 });
+    expect(getState(instance)).toEqual({ lists: [], index: 0 });
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
@@ -96,10 +98,7 @@ describe('useAppState', () => {
 
     expect(getState(instance)).toEqual({
       index: 0,
-      items: [
-        [],
-      ],
-      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
     });
   });
 
@@ -157,13 +156,15 @@ describe('useAppState', () => {
       await waitFor(() => {
         expect(getState(instance)).toEqual({
           index: 0,
-          items: [
-            [
+          lists: [{
+            id: 'list-id',
+            key: expect.any(String),
+            name: 'Shopping List',
+            items: [
               { id: 's-1234', key: 's-1234', text: 'Carrots' },
               { id: 's-5678', key: 's-5678', text: 'Bananas' },
             ],
-          ],
-          lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+          }],
         });
       });
 
@@ -183,13 +184,15 @@ describe('useAppState', () => {
       await waitFor(() => {
         expect(getState(instance)).toEqual({
           index: 0,
-          items: [
-            [
+          lists: [{
+            id: 'list-id',
+            key: expect.any(String),
+            name: 'Shopping List',
+            items: [
               { id: 's-1234', key: 's-1234', text: 'Apples' },
               { id: 's-5678', key: 's-5678', text: 'Bananas' },
             ],
-          ],
-          lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+          }],
         });
       });
 
@@ -208,12 +211,12 @@ describe('useAppState', () => {
 
       expect(getState(instance)).toEqual({
         index: 0,
-        items: [
-          [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-          ],
-        ],
-        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+        lists: [{
+          id: 'list-id',
+          key: expect.any(String),
+          name: 'Shopping List',
+          items: [{ id: 's-1234', key: 's-1234', text: 'Apples' }],
+        }],
       });
 
       expect(mockFetch).toHaveBeenCalledWith(
@@ -231,13 +234,15 @@ describe('useAppState', () => {
 
       expect(getState(instance)).toEqual({
         index: 0,
-        items: [
-          [
+        lists: [{
+          id: 'list-id',
+          key: expect.any(String),
+          name: 'Shopping List',
+          items: [
             { id: 's-1234', key: 's-1234', text: 'Apples' },
             { id: 's-5678', key: 's-5678', text: 'Bananas' },
           ],
-        ],
-        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+        }],
       });
     });
   });
@@ -254,10 +259,7 @@ describe('useAppState', () => {
 
       expect(getState(instance)).toEqual({
         index: 0,
-        items: [
-          [],
-        ],
-        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
       });
     });
 
@@ -267,12 +269,12 @@ describe('useAppState', () => {
 
     expect(getState(instance)).toEqual({
       index: 0,
-      items: [
-        [
-          { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
-        ],
-      ],
-      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }],
+      lists: [{
+        id: 'list-id',
+        key: expect.any(String),
+        name: 'Shopping List',
+        items: [{ id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false }],
+      }],
     });
 
     expect(mockFetch).toHaveBeenCalledWith(
