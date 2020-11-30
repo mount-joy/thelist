@@ -65,11 +65,12 @@
 }
 
 .displayListDetails {
-  display: block;
+  height: 100%;
 }
 
 .hideListDetails {
-  display: none;
+  height: 0;
+  opacity: 0;
 }
 
 .copyList,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faCopy, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as Logo } from '../../static/logo.svg';
@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 
 const ListHeader = () => {
   const [listDetailsShown, showListDetails] = useState();
+  const listText = useRef(null);
 
   const shareList = () => {
     if (navigator.share) {
@@ -15,8 +16,7 @@ const ListHeader = () => {
         url: 'https:thelist.app',
       });
     } else {
-      const listText = document.getElementById('listText');
-      listText.select();
+      listText.current.select();
       document.execCommand('copy');
     }
   };
@@ -62,8 +62,9 @@ const ListHeader = () => {
             type="text"
             spellCheck="false"
             value="https:thelist.app"
-            id="listText"
+            ref={listText}
             onClick={shareList}
+            readOnly
           />
           <FontAwesomeIcon
             icon={faCopy}
