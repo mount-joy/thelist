@@ -1,6 +1,6 @@
 export const types = {
   SET_LIST_ID: 'SET_LIST_ID',
-  SET_ITEMS: 'SET_ITEMS',
+  SET_STATE: 'SET_STATE',
   NEW_ITEM: 'NEW_ITEM',
   DELETE_ITEM_BY_KEY: 'DELETE_ITEM_BY_KEY',
   UPDATE_ITEM_BY_KEY: 'UPDATE_ITEM_BY_KEY',
@@ -16,8 +16,8 @@ const reducer = (state, { type, data }) => {
     case types.SET_LIST_ID:
       return { ...state, listId: data.listId };
 
-    case types.SET_ITEMS:
-      return { ...state, items: data.items };
+    case types.SET_STATE:
+      return data.state;
 
     case types.NEW_ITEM: {
       const { text, id, key } = data;

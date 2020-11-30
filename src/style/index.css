@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding:
+    env(safe-area-inset-top, 20px)
+    env(safe-area-inset-right, 20px)
+    env(safe-area-inset-bottom, 20px)
+    env(safe-area-inset-left, 20px);
 }
 
 code {
@@ -14,7 +19,7 @@ code {
 
 :root {
   --item_grey: #F8F8F8;
-  --font_grey: #888888;
+  --font_grey: #555555;
   --main_green: #8AB661;
   --check_grey: #979797;
   --check_yellow: #FABE0E;

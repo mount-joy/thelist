@@ -2,20 +2,20 @@ import React, { forwardRef, useImperativeHandle } from 'react';
 import { render, waitFor, act } from '@testing-library/react';
 import { del, keys } from 'idb-keyval';
 
-import useItems from './useItems';
+import useAppState from './useAppState';
 
 const WrapperComponent = forwardRef((props, ref) => {
-  const [items, actions] = useItems();
+  const [state, actions] = useAppState();
 
   useImperativeHandle(ref, () => ({ actions }));
 
-  return <div data-testid="items">{JSON.stringify(items)}</div>;
+  return <div data-testid="state">{JSON.stringify(state)}</div>;
 });
 
-const getItems = (instance) => JSON.parse(instance.container.children[0].innerHTML);
+const getState = (instance) => JSON.parse(instance.container.children[0].innerHTML);
 const clearDB = async () => Promise.all((await keys()).map((key) => del(key)));
 
-describe('useItems', () => {
+describe('useAppState', () => {
   let mockFetch;
 
   beforeEach(async () => {
@@ -56,7 +56,7 @@ describe('useItems', () => {
   it('uses the default value the first time and creates a list', async () => {
     const instance = render(<WrapperComponent />);
 
-    expect(getItems(instance)).toEqual([]);
+    expect(getState(instance)).toEqual({ items: [], listId: null });
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
@@ -69,10 +69,13 @@ describe('useItems', () => {
       );
     });
 
-    expect(getItems(instance)).toEqual([
-      { id: 's-1234', key: 's-1234', text: 'Apples' },
-      { id: 's-5678', key: 's-5678', text: 'Bananas' },
-    ]);
+    expect(getState(instance)).toEqual({
+      items: [
+        { id: 's-1234', key: 's-1234', text: 'Apples' },
+        { id: 's-5678', key: 's-5678', text: 'Bananas' },
+      ],
+      listId: 'list-id',
+    });
   });
 
   it('re-uses the previous listId', async () => {
@@ -108,10 +111,10 @@ describe('useItems', () => {
     const instance = render(<WrapperComponent ref={ref} />);
 
     await act(async () => {
-      await ref.current.actions.setItems([{ item: 'A' }]);
+      await ref.current.actions.setState({ items: [{ item: 'A' }], listId: null });
     });
 
-    expect(getItems(instance)).toEqual([{ item: 'A' }]);
+    expect(getState(instance)).toEqual({ items: [{ item: 'A' }], listId: null });
   });
 
   it('uses the previous value the next time', async () => {
@@ -119,13 +122,13 @@ describe('useItems', () => {
     render(<WrapperComponent ref={ref} />);
 
     await act(async () => {
-      await ref.current.actions.setItems([{ item: 'A' }]);
+      await ref.current.actions.setState({ items: [{ item: 'A' }] });
     });
 
     const instance = render(<WrapperComponent />);
 
     await waitFor(() => {
-      expect(getItems(instance)).toEqual([{ item: 'A' }]);
+      expect(getState(instance)).toEqual({ items: [{ item: 'A' }] });
     });
   });
 
@@ -135,10 +138,13 @@ describe('useItems', () => {
       const instance = render(<WrapperComponent ref={ref} />);
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       await act(async () => {
@@ -146,10 +152,13 @@ describe('useItems', () => {
       });
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Carrots' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Carrots' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       expect(mockFetch).toHaveBeenCalledWith(
@@ -163,10 +172,13 @@ describe('useItems', () => {
       const instance = render(<WrapperComponent ref={ref} />);
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       await act(async () => {
@@ -174,10 +186,13 @@ describe('useItems', () => {
       });
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       // No patch methods
@@ -191,19 +206,25 @@ describe('useItems', () => {
       const instance = render(<WrapperComponent ref={ref} />);
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       await act(async () => {
         await ref.current.actions.deleteItemByKey('s-5678');
       });
 
-      expect(getItems(instance)).toEqual([
-        { id: 's-1234', key: 's-1234', text: 'Apples' },
-      ]);
+      expect(getState(instance)).toEqual({
+        items: [
+          { id: 's-1234', key: 's-1234', text: 'Apples' },
+        ],
+        listId: 'list-id',
+      });
 
       expect(mockFetch).toHaveBeenCalledWith(
         'https://api.thelist.app/lists/list-id/items/s-5678',
@@ -216,20 +237,26 @@ describe('useItems', () => {
       const instance = render(<WrapperComponent ref={ref} />);
 
       await waitFor(() => {
-        expect(getItems(instance)).toEqual([
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ]);
+        expect(getState(instance)).toEqual({
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+          listId: 'list-id',
+        });
       });
 
       await act(async () => {
         await ref.current.actions.deleteItemByKey('s-unknown');
       });
 
-      expect(getItems(instance)).toEqual([
-        { id: 's-1234', key: 's-1234', text: 'Apples' },
-        { id: 's-5678', key: 's-5678', text: 'Bananas' },
-      ]);
+      expect(getState(instance)).toEqual({
+        items: [
+          { id: 's-1234', key: 's-1234', text: 'Apples' },
+          { id: 's-5678', key: 's-5678', text: 'Bananas' },
+        ],
+        listId: 'list-id',
+      });
     });
   });
 
@@ -248,11 +275,14 @@ describe('useItems', () => {
       await ref.current.actions.newItem('Carrots');
     });
 
-    expect(getItems(instance)).toEqual([
-      { id: 's-1234', key: 's-1234', text: 'Apples' },
-      { id: 's-5678', key: 's-5678', text: 'Bananas' },
-      { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
-    ]);
+    expect(getState(instance)).toEqual({
+      items: [
+        { id: 's-1234', key: 's-1234', text: 'Apples' },
+        { id: 's-5678', key: 's-5678', text: 'Bananas' },
+        { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
+      ],
+      listId: 'list-id',
+    });
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://api.thelist.app/lists/list-id/items',
