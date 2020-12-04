@@ -8,6 +8,7 @@ import styles from './styles.module.css';
 const ListHeader = () => {
   const [listDetailsShown, showListDetails] = useState();
   const listText = useRef(null);
+  const url = 'https://thelist.app';
 
   const shareList = () => {
     if (navigator.share) {
@@ -15,9 +16,8 @@ const ListHeader = () => {
         title: 'Share Your List!',
         url: 'https:thelist.app',
       });
-    } else {
-      listText.current.select();
-      document.execCommand('copy');
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
     }
   };
 
@@ -61,7 +61,7 @@ const ListHeader = () => {
           <input
             type="text"
             spellCheck="false"
-            value="https:thelist.app"
+            value={url}
             ref={listText}
             onClick={shareList}
             readOnly
