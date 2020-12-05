@@ -1,7 +1,6 @@
 import { types } from './reducer';
 
 const getActions = (dispatch) => ({
-  setListId: (listId) => dispatch({ type: types.SET_LIST_ID, data: { listId } }),
   setState: (state) => dispatch({ type: types.SET_STATE, data: { state } }),
   newItem: (text, id) => dispatch({ type: types.NEW_ITEM, data: { text, id, key: `${Date.now()}` } }),
   deleteItemByKey: (key) => dispatch({ type: types.DELETE_ITEM_BY_KEY, data: { key } }),
