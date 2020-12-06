@@ -15,6 +15,37 @@ const WrapperComponent = forwardRef((props, ref) => {
 const getState = (instance) => JSON.parse(instance.container.children[0].innerHTML);
 const clearDB = async () => Promise.all((await keys()).map((key) => del(key)));
 
+const renderAndHydrateComponent = async () => {
+  const ref = React.createRef();
+  const instance = render(<WrapperComponent ref={ref} />);
+  await waitFor(() => {
+    expect(instance.getByText(/Shopping List/)).toBeInTheDocument();
+  });
+
+  const state = {
+    index: 0,
+    lists: [{
+      id: 'list-id',
+      key: 'list-key',
+      name: 'Shopping List',
+      items: [
+        { id: 's-1234', key: 's-1234', text: 'Apples' },
+        { id: 's-5678', key: 's-5678', text: 'Bananas' },
+      ],
+    }],
+  };
+
+  await act(async () => {
+    await ref.current.actions.setState(state);
+  });
+
+  await waitFor(() => {
+    expect(getState(instance)).toEqual(state);
+  });
+
+  return { ref, instance };
+};
+
 describe('useAppState', () => {
   let mockFetch;
 
@@ -33,8 +64,8 @@ describe('useAppState', () => {
           }
           return Promise.resolve({
             json: async () => [
-              { Id: 's-1234', Name: 'Apples', ListId: 'list-id' },
-              { Id: 's-5678', Name: 'Bananas', ListId: 'list-id' },
+              { Id: 's-1234', Name: 'Apples', lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }] },
+              { Id: 's-5678', Name: 'Bananas', lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }] },
             ],
           });
         }
@@ -56,25 +87,18 @@ describe('useAppState', () => {
   it('uses the default value the first time and creates a list', async () => {
     const instance = render(<WrapperComponent />);
 
-    expect(getState(instance)).toEqual({ items: [], listId: null });
+    expect(getState(instance)).toEqual({ lists: [], index: 0 });
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
         'https://api.thelist.app/lists',
         { body: '{"Name":"Shopping List"}', method: 'POST', headers: { 'Content-Type': 'application/json' } },
       );
-      expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.thelist.app/lists/list-id/items',
-        { method: 'GET' },
-      );
     });
 
     expect(getState(instance)).toEqual({
-      items: [
-        { id: 's-1234', key: 's-1234', text: 'Apples' },
-        { id: 's-5678', key: 's-5678', text: 'Bananas' },
-      ],
-      listId: 'list-id',
+      index: 0,
+      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
     });
   });
 
@@ -93,7 +117,7 @@ describe('useAppState', () => {
     // First time a list is created
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(...createListArgs);
-      expect(mockFetch).toHaveBeenCalledWith(...getItemsArgs);
+      expect(mockFetch).not.toHaveBeenCalledWith(...getItemsArgs);
     }, { timeout: 4000 });
 
     jest.clearAllMocks();
@@ -106,23 +130,12 @@ describe('useAppState', () => {
     });
   });
 
-  it('when setItems is called the value is updated', async () => {
-    const ref = React.createRef();
-    const instance = render(<WrapperComponent ref={ref} />);
-
-    await act(async () => {
-      await ref.current.actions.setState({ items: [{ item: 'A' }], listId: null });
-    });
-
-    expect(getState(instance)).toEqual({ items: [{ item: 'A' }], listId: null });
-  });
-
   it('uses the previous value the next time', async () => {
     const ref = React.createRef();
     render(<WrapperComponent ref={ref} />);
 
     await act(async () => {
-      await ref.current.actions.setState({ items: [{ item: 'A' }] });
+      await ref.current.actions.setState({ items: [[{ item: 'A' }]], lists: [] });
     });
 
     const instance = render(<WrapperComponent />);
@@ -136,18 +149,7 @@ describe('useAppState', () => {
 
   describe('updateItemByKey', () => {
     it('when called the item is updated', async () => {
-      const ref = React.createRef();
-      const instance = render(<WrapperComponent ref={ref} />);
-
-      await waitFor(() => {
-        expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
-        });
-      });
+      const { ref, instance } = await renderAndHydrateComponent();
 
       await act(async () => {
         await ref.current.actions.updateItemByKey('Carrots', 's-1234');
@@ -155,11 +157,16 @@ describe('useAppState', () => {
 
       await waitFor(() => {
         expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Carrots' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
+          index: 0,
+          lists: [{
+            id: 'list-id',
+            key: expect.any(String),
+            name: 'Shopping List',
+            items: [
+              { id: 's-1234', key: 's-1234', text: 'Carrots' },
+              { id: 's-5678', key: 's-5678', text: 'Bananas' },
+            ],
+          }],
         });
       });
 
@@ -170,18 +177,7 @@ describe('useAppState', () => {
     });
 
     it('when called with an invalid key, no item is updated', async () => {
-      const ref = React.createRef();
-      const instance = render(<WrapperComponent ref={ref} />);
-
-      await waitFor(() => {
-        expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
-        });
-      });
+      const { ref, instance } = await renderAndHydrateComponent();
 
       await act(async () => {
         await ref.current.actions.updateItemByKey('Carrots', 's-other');
@@ -189,11 +185,16 @@ describe('useAppState', () => {
 
       await waitFor(() => {
         expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
+          index: 0,
+          lists: [{
+            id: 'list-id',
+            key: expect.any(String),
+            name: 'Shopping List',
+            items: [
+              { id: 's-1234', key: 's-1234', text: 'Apples' },
+              { id: 's-5678', key: 's-5678', text: 'Bananas' },
+            ],
+          }],
         });
       });
 
@@ -204,28 +205,20 @@ describe('useAppState', () => {
 
   describe('deleteItemByKey', () => {
     it('when called the item is removed', async () => {
-      const ref = React.createRef();
-      const instance = render(<WrapperComponent ref={ref} />);
-
-      await waitFor(() => {
-        expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
-        });
-      });
+      const { ref, instance } = await renderAndHydrateComponent();
 
       await act(async () => {
         await ref.current.actions.deleteItemByKey('s-5678');
       });
 
       expect(getState(instance)).toEqual({
-        items: [
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-        ],
-        listId: 'list-id',
+        index: 0,
+        lists: [{
+          id: 'list-id',
+          key: expect.any(String),
+          name: 'Shopping List',
+          items: [{ id: 's-1234', key: 's-1234', text: 'Apples' }],
+        }],
       });
 
       expect(mockFetch).toHaveBeenCalledWith(
@@ -235,29 +228,23 @@ describe('useAppState', () => {
     });
 
     it('when called with an invalid key, no item is removed', async () => {
-      const ref = React.createRef();
-      const instance = render(<WrapperComponent ref={ref} />);
-
-      await waitFor(() => {
-        expect(getState(instance)).toEqual({
-          items: [
-            { id: 's-1234', key: 's-1234', text: 'Apples' },
-            { id: 's-5678', key: 's-5678', text: 'Bananas' },
-          ],
-          listId: 'list-id',
-        });
-      });
+      const { ref, instance } = await renderAndHydrateComponent();
 
       await act(async () => {
         await ref.current.actions.deleteItemByKey('s-unknown');
       });
 
       expect(getState(instance)).toEqual({
-        items: [
-          { id: 's-1234', key: 's-1234', text: 'Apples' },
-          { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        ],
-        listId: 'list-id',
+        index: 0,
+        lists: [{
+          id: 'list-id',
+          key: expect.any(String),
+          name: 'Shopping List',
+          items: [
+            { id: 's-1234', key: 's-1234', text: 'Apples' },
+            { id: 's-5678', key: 's-5678', text: 'Bananas' },
+          ],
+        }],
       });
     });
   });
@@ -271,6 +258,11 @@ describe('useAppState', () => {
         'https://api.thelist.app/lists',
         { body: '{"Name":"Shopping List"}', method: 'POST', headers: { 'Content-Type': 'application/json' } },
       );
+
+      expect(getState(instance)).toEqual({
+        index: 0,
+        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
+      });
     });
 
     await act(async () => {
@@ -278,12 +270,13 @@ describe('useAppState', () => {
     });
 
     expect(getState(instance)).toEqual({
-      items: [
-        { id: 's-1234', key: 's-1234', text: 'Apples' },
-        { id: 's-5678', key: 's-5678', text: 'Bananas' },
-        { id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false },
-      ],
-      listId: 'list-id',
+      index: 0,
+      lists: [{
+        id: 'list-id',
+        key: expect.any(String),
+        name: 'Shopping List',
+        items: [{ id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false }],
+      }],
     });
 
     expect(mockFetch).toHaveBeenCalledWith(

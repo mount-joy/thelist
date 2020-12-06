@@ -1,14 +1,18 @@
 import React from 'react';
-import { fireEvent, getNodeText, render } from '@testing-library/react';
+import { fireEvent, getNodeText, render, waitFor, act } from '@testing-library/react';
+import { del, keys } from 'idb-keyval';
 
 import App from './App';
+
+const clearDB = async () => Promise.all((await keys()).map((key) => del(key)));
 
 describe('App', () => {
   const inputBoxPlaceholderText = 'Add something to the list...';
 
   describe('displays all expected parts', () => {
     let instance;
-    beforeEach(() => {
+    beforeEach(async () => {
+      await clearDB();
       instance = render(<App />);
     });
 
@@ -40,18 +44,36 @@ describe('App', () => {
     let instance;
     let inputBox;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      await clearDB();
+      global.fetch = jest.fn().mockResolvedValue({ json: jest.fn().mockResolvedValue({ Id: '1234' }) });
       instance = render(<App />);
       const { getByPlaceholderText, container } = instance;
 
       inputBox = getByPlaceholderText(inputBoxPlaceholderText);
       const form = container.querySelector('form');
 
-      fireEvent.change(inputBox, { target: { value: 'Oranges' } });
+      await waitFor(() => {
+        expect(instance.getByTestId('list-name')).toBeInTheDocument();
+      }, { timeout: 4000 });
+
+      act(() => {
+        fireEvent.change(inputBox, { target: { value: 'Oranges' } });
+      });
+
       expect(inputBox.value).toBe('Oranges');
-      fireEvent.submit(form);
-      fireEvent.change(inputBox, { target: { value: 'Apples' } });
-      fireEvent.submit(form);
+
+      act(() => {
+        fireEvent.submit(form);
+      });
+
+      act(() => {
+        fireEvent.change(inputBox, { target: { value: 'Apples' } });
+      });
+
+      act(() => {
+        fireEvent.submit(form);
+      });
     });
 
     it('displays the new items', () => {
