@@ -141,9 +141,7 @@ describe('useAppState', () => {
     const instance = render(<WrapperComponent />);
 
     await waitFor(() => {
-      expect(getState(instance).items).toEqual(
-        expect.arrayContaining([{ item: 'A' }]),
-      );
+      expect(getState(instance)).toEqual({ items: [[{ item: 'A' }]], lists: [] });
     });
   });
 
