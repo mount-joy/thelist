@@ -1,32 +1,133 @@
 .listHeader {
-    background-color: var(--main_green);
-    box-sizing: border-box;
-    padding: 26px 26px 60px 26px;
-    height: 165px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background-color: var(--main_green);
+  box-sizing: border-box;
+  padding: 26px 26px 60px 26px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 1s;
 }
 
-.headerRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.headerRow,
+.subheadingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
 }
 
 .headerRow h3,
-.headerRow h4 {
-    margin: 0;
-    color: #FFFFFF;
-    opacity: 0.7;
-    font-weight: 600;
+.headerRow h4,
+.subheadingRow h4 {
+  margin: 0;
+  color: #FFFFFF;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.headerRow h3 {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-    height: 20px;
+  height: 20px;
 }
 
 .shareIcon {
-    font-size: 20px;
-    color: #FFFFFF;
+  font-size: 20px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.pencilIcon {
+  margin-left: 15px;
+  font-size: 16px;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.shareIcon:focus,
+.pencilIcon:focus {
+  outline: none;
+  border: 0;
+}
+
+.clockIcon,
+.deleteListIcon {
+  margin-right: 10px;
+}
+
+.subheadingRow {
+  justify-content: center;
+}
+
+/* .displayListDetails {
+  height: 100%;
+} */
+
+.hideListDetails {
+  /* height: 0;
+  opacity: 0; */
+  display: none;
+}
+
+.copyList,
+.deleteList {
+  background-color: var(--share_background);
+  height: 44px;
+  border-radius: 22px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 0 14px 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.copyList h5 {
+  font-size: 16px;
+  color: var(--font_grey);
+  opacity: 0.5;
+  margin-right: 5px;
+}
+
+.copyList input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: transparent;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
+  flex-grow: 1;
+  cursor: pointer;
+  color: var(--font_grey);
+  padding: 10px 0;
+}
+
+.copyList input:focus {
+  outline: 0;
+  border: none;
+  padding: 0;
+}
+
+.copyIcon {
+  color: var(--check_grey);
+}
+
+@media (max-width: 360px) {
+  .copyList h5 {
+    display: none;
+  }
+}
+
+.deleteList {
+  background-color: var(--delete_red);
+  color: #FFFFFF;
+  font-weight: 600;
+  justify-content: center;
 }

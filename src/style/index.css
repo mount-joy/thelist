@@ -23,6 +23,8 @@ code {
   --main_green: #8AB661;
   --check_grey: #979797;
   --check_yellow: #FABE0E;
+  --share_background: #DBECCC;
+  --delete_red: #FD8664;
 }
 
 ul, li {
