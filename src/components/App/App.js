@@ -1,4 +1,6 @@
 import React from 'react';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import ListHeader from '../ListHeader';
 import ShoppingList from '../ShoppingList';
@@ -14,6 +16,7 @@ const App = () => {
       <ListHeader />
       <ShoppingList items={selectItems(state)} actions={actions} />
       <ListSelector lists={selectLists(state)} selectedIndex={state.index} />
+      <NotificationContainer />
     </>
   );
 };

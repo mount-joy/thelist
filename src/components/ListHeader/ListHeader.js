@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { NotificationManager } from 'react-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faCopy, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as Logo } from '../../static/logo.svg';
@@ -18,6 +19,7 @@ const ListHeader = () => {
       });
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
+      NotificationManager.success('Get sharing your list with others!', 'Copied to Clipboard!', 3000);
     }
   };
 
