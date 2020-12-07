@@ -4,7 +4,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './styles.module.css';
 
-const ListSelector = ({ lists, selectedIndex }) => (
+const ListSelector = ({ lists, selectedIndex, actions }) => (
   <div className={styles.listSelector}>
     <div className={styles.selectorWrapper}>
       <ul>
@@ -22,6 +22,7 @@ const ListSelector = ({ lists, selectedIndex }) => (
         <FontAwesomeIcon
           icon={faPlusCircle}
           className={styles.addListIcon}
+          onClick={() => actions.newList(`Shopping List ${lists.length + 1}`)}
         />
       </button>
     </div>
