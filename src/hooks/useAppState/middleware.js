@@ -60,6 +60,13 @@ const applyMiddleware = (dispatch, getState) => (action) => {
       break;
     }
 
+    case types.NEW_LIST: {
+      const { key, name } = data;
+      createList(name)
+        .then((id) => dispatch({ type: types.STORE_LIST_ID, data: { key, id } }));
+      break;
+    }
+
     default:
   }
 

@@ -15,7 +15,7 @@ const App = () => {
     <>
       <ListHeader />
       <ShoppingList items={selectItems(state)} actions={actions} />
-      <ListSelector lists={selectLists(state)} selectedIndex={state.index} />
+      <ListSelector lists={selectLists(state)} selectedIndex={state.index} actions={actions} />
       <NotificationContainer />
     </>
   );

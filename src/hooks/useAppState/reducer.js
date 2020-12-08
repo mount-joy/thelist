@@ -15,10 +15,11 @@ export const initialState = { lists: [], index: 0 };
 const reducer = (state, { type, data }) => {
   switch (type) {
     case types.NEW_LIST: {
-      const { key, name } = data;
+      const { key, name, id } = data;
       return {
         ...state,
-        lists: [...state.lists, { key, name, items: [] }],
+        lists: [...state.lists, { key, name, id, items: [] }],
+        index: state.lists.length,
       };
     }
 
