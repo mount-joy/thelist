@@ -43,6 +43,8 @@
     flex-grow: 1;
     flex-shrink: 0;
     font-weight: 600;
+    outline: 0;
+    cursor: pointer;
 }
 
 .listSelector .active {
