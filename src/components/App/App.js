@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <>
-      <ListHeader />
+      <ListHeader items={selectItems(state)} />
       <ShoppingList items={selectItems(state)} actions={actions} />
       <ListSelector lists={selectLists(state)} selectedIndex={state.index} actions={actions} />
     </>

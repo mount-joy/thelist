@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faCopy, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -5,7 +6,7 @@ import { ReactComponent as Logo } from '../../static/logo.svg';
 
 import styles from './styles.module.css';
 
-const ListHeader = () => {
+const ListHeader = ({ items }) => {
   const [listDetailsShown, showListDetails] = useState();
   const listText = useRef(null);
   const url = 'https://thelist.app';
@@ -44,7 +45,7 @@ const ListHeader = () => {
             onClick={() => showListDetails(!listDetailsShown)}
           />
         </h3>
-        <h4>15 items</h4>
+        <h4>{items.filter(item => !item.isCompleted).length} items</h4>
       </div>
       <div className={listDetailsShown ? (styles.displayListDetails) : (styles.hideListDetails)}>
         <div className={styles.subheadingRow}>
