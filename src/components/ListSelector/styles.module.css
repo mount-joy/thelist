@@ -31,9 +31,10 @@
     background: transparent;
 }
 
-.listSelector li {
+.listSelectorItem {
     padding: 6px 26px;
     border-radius: 20px;
+    border-width: 0;
     background-color: var(--main_green);
     color: #FFFFFF;
     font-size: 16px;
@@ -42,6 +43,8 @@
     flex-grow: 1;
     flex-shrink: 0;
     font-weight: 600;
+    outline: 0;
+    cursor: pointer;
 }
 
 .listSelector .active {
