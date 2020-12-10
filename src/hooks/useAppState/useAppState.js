@@ -26,7 +26,7 @@ const useAppState = () => {
           getList(sharedListId)
             .then(({ name }) => actions.newList(`${name} (Shared)`, sharedListId));
         }
-        window.history.replaceState(null, document.title, '/');
+        window.history.replaceState(null, document.title, window.location.pathname);
       }
     })();
 
