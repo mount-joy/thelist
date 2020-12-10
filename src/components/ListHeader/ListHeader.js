@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 const ListHeader = ({ list }) => {
   const [listDetailsShown, showListDetails] = useState();
   const listText = useRef(null);
-  const url = `${window.location.origin}?list_id=${list?.id}`;
+  const url = `${window.location}?list_id=${list?.id}`;
 
   const shareList = () => {
     if (navigator.share) {
