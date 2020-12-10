@@ -3,6 +3,7 @@ import createList from '../../api/createList';
 import deleteItem from '../../api/deleteItem';
 import getItems from '../../api/getItems';
 import updateItem from '../../api/updateItem';
+import getPageTitle from '../../utils/getPageTitle';
 
 import { types } from './reducer';
 import { selectItems, selectListId } from './selectors';
@@ -51,11 +52,14 @@ const applyMiddleware = (dispatch, getState) => (action) => {
         dispatch({ type: types.NEW_LIST, data: { key, name } });
         createList(name)
           .then((id) => dispatch({ type: types.STORE_LIST_ID, data: { key, id } }));
+        document.title = getPageTitle(name);
       } else {
         lists.forEach(({ id }) => {
           getItems(id)
             .then((items) => dispatch({ type: types.MERGE_ITEMS, data: { items, listId: id } }));
         });
+        const name = lists[data.state.index]?.name;
+        document.title = getPageTitle(name);
       }
       break;
     }
@@ -64,6 +68,14 @@ const applyMiddleware = (dispatch, getState) => (action) => {
       const { key, name } = data;
       createList(name)
         .then((id) => dispatch({ type: types.STORE_LIST_ID, data: { key, id } }));
+      break;
+    }
+
+    case types.SWITCH_LIST: {
+      const { newIndex } = data;
+      const state = getState();
+      const name = state.lists[newIndex]?.name;
+      document.title = getPageTitle(name);
       break;
     }
 
