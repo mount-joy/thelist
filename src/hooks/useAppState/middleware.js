@@ -61,9 +61,14 @@ const applyMiddleware = (dispatch, getState) => (action) => {
     }
 
     case types.NEW_LIST: {
-      const { key, name } = data;
-      createList(name)
-        .then((id) => dispatch({ type: types.STORE_LIST_ID, data: { key, id } }));
+      const { id, key, name } = data;
+      if (id) {
+        getItems(id)
+          .then((items) => dispatch({ type: types.MERGE_ITEMS, data: { items, listId: id } }));
+      } else {
+        createList(name)
+          .then((listId) => dispatch({ type: types.STORE_LIST_ID, data: { key, listId } }));
+      }
       break;
     }
 

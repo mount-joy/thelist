@@ -4,7 +4,7 @@ import ListHeader from '../ListHeader';
 import ShoppingList from '../ShoppingList';
 import ListSelector from '../ListSelector';
 import useAppState from '../../hooks/useAppState';
-import { selectItems, selectListName, selectLists } from '../../hooks/useAppState/selectors';
+import { selectItems, selectListName, selectList, selectLists } from '../../hooks/useAppState/selectors';
 import getPageTitle from '../../utils/getPageTitle';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <>
-      <ListHeader />
+      <ListHeader list={selectList(state)} />
       <ShoppingList items={selectItems(state)} actions={actions} />
       <ListSelector lists={selectLists(state)} selectedIndex={state.index} actions={actions} />
     </>
