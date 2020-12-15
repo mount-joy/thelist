@@ -9,13 +9,16 @@ const ListSelector = ({ lists, selectedIndex, actions }) => (
     <div className={styles.selectorWrapper}>
       <ul>
         {lists.map((list, index) => (
-          <li
-            className={index === selectedIndex ? styles.active : ''}
+          <button
+            className={`${styles.listSelectorItem} ${index === selectedIndex ? styles.active : ''}`}
             key={list.key}
             data-testid="list-name"
+            onClick={() => actions.switchList(index)}
+            type="button"
+            aria-label="Select list"
           >
             {list.name}
-          </li>
+          </button>
         ))}
       </ul>
       <button type="submit" aria-label="Add list">

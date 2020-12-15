@@ -8,6 +8,7 @@ export const types = {
   STORE_ID: 'STORE_ID',
   STORE_LIST_ID: 'STORE_LIST_ID',
   MERGE_ITEMS: 'MERGE_ITEMS',
+  SWITCH_LIST: 'SWITCH_LIST',
 };
 
 export const initialState = { lists: [], index: 0 };
@@ -169,6 +170,14 @@ const reducer = (state, { type, data }) => {
             items: [...list.items, ...unknownItems],
           };
         }),
+      };
+    }
+
+    case types.SWITCH_LIST: {
+      const { newIndex } = data;
+      return {
+        ...state,
+        index: newIndex,
       };
     }
 

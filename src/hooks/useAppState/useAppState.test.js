@@ -58,17 +58,30 @@ describe('useAppState', () => {
         case 'https://api.thelist.app/lists':
           return Promise.resolve({ json: async () => ({ Id: 'list-id' }) });
 
+        case 'https://api.thelist.app/lists/shared-list-id':
+          return Promise.resolve({ json: async () => ({ Id: 'shared-list-id', Name: 'Shopping List' }) });
+
         case 'https://api.thelist.app/lists/list-id/items': {
           if (config.method === 'POST') {
             return Promise.resolve({ json: async () => ({ Id: 'new-item-id' }) });
           }
           return Promise.resolve({
             json: async () => [
-              { Id: 's-1234', Name: 'Apples', lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }] },
-              { Id: 's-5678', Name: 'Bananas', lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List' }] },
+              { Id: 's-1234', Name: 'Apples' },
+              { Id: 's-5678', Name: 'Bananas' },
             ],
           });
         }
+
+        case 'https://api.thelist.app/lists/shared-list-id/items': {
+          return Promise.resolve({
+            json: async () => [
+              { Id: 's-abcd', Name: 'Pears' },
+              { Id: 's-wxyz', Name: 'Oranges' },
+            ],
+          });
+        }
+
         case 'https://api.thelist.app/lists/list-id/items/s-1234':
         case 'https://api.thelist.app/lists/list-id/items/s-5678': {
           if (config.method === 'DELETE') {
@@ -281,5 +294,47 @@ describe('useAppState', () => {
       'https://api.thelist.app/lists/list-id/items',
       { body: '{"Name":"Carrots"}', method: 'POST', headers: { 'Content-Type': 'application/json' } },
     );
+  });
+
+  it('when accessing a shared list URL, the shared list is displayed', async () => {
+    const { location } = global.window;
+    delete global.window.location;
+    global.window.location = new URL('https://example.com?list_id=shared-list-id');
+    const instance = render(<WrapperComponent />);
+
+    await waitFor(() => {
+      expect(getState(instance)).toEqual({
+        index: 1,
+        lists: [
+          {
+            id: 'list-id',
+            key: expect.any(String),
+            name: 'Shopping List',
+            items: [],
+          },
+          {
+            id: 'shared-list-id',
+            key: expect.any(String),
+            name: 'Shopping List (Shared)',
+            items: [
+              { id: 's-abcd', key: 's-abcd', text: 'Pears' },
+              { id: 's-wxyz', key: 's-wxyz', text: 'Oranges' },
+            ],
+          },
+        ],
+      });
+    }, { timeout: 4500 });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://api.thelist.app/lists/shared-list-id',
+      { method: 'GET' },
+    );
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://api.thelist.app/lists/shared-list-id/items',
+      { method: 'GET' },
+    );
+
+    global.window.location = location;
   });
 });

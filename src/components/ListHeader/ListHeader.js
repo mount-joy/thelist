@@ -6,16 +6,16 @@ import { ReactComponent as Logo } from '../../static/logo.svg';
 
 import styles from './styles.module.css';
 
-const ListHeader = ({ items }) => {
+const ListHeader = ({ items, list }) => {
   const [listDetailsShown, showListDetails] = useState();
   const listText = useRef(null);
-  const url = 'https://thelist.app';
+  const url = `${window.location}?list_id=${list?.id}`;
 
   const shareList = () => {
     if (navigator.share) {
       navigator.share({
         title: 'Share Your List!',
-        url: 'https:thelist.app',
+        url,
       });
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
