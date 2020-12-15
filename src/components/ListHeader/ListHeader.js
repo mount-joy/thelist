@@ -1,4 +1,3 @@
-/* eslint-disable  */
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faCopy, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
