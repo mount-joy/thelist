@@ -31,3 +31,8 @@ ul, li {
   list-style: none;
   padding-inline-start: 0px;
 }
+
+.notification-success {
+  background-color: var(--check_yellow);
+  border-radius: 5px;
+}

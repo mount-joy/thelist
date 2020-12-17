@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import ListHeader from '../ListHeader';
 import ShoppingList from '../ShoppingList';
@@ -20,6 +22,7 @@ const App = () => {
       <ListHeader list={selectList(state)} items={selectItems(state)} />
       <ShoppingList items={selectItems(state)} actions={actions} />
       <ListSelector lists={selectLists(state)} selectedIndex={state.index} actions={actions} />
+      <NotificationContainer />
     </>
   );
 };
