@@ -44,7 +44,11 @@ const ListHeader = ({ items, list }) => {
             onClick={() => showListDetails(!listDetailsShown)}
           />
         </h3>
-        <h4>{items.filter(item => !item.isCompleted).length} items</h4>
+        <h4>
+          {items.filter((item) => !item.isCompleted).length}
+          {' '}
+          items
+        </h4>
       </div>
       <div className={listDetailsShown ? (styles.displayListDetails) : (styles.hideListDetails)}>
         <div className={styles.subheadingRow}>
