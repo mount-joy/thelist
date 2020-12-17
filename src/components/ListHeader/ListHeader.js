@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from '../../static/logo.svg';
 
 import styles from './styles.module.css';
 
-const ListHeader = ({ list }) => {
+const ListHeader = ({ items, list }) => {
   const [listDetailsShown, showListDetails] = useState();
   const listText = useRef(null);
   const url = `${window.location}?list_id=${list?.id}`;
@@ -44,7 +44,11 @@ const ListHeader = ({ list }) => {
             onClick={() => showListDetails(!listDetailsShown)}
           />
         </h3>
-        <h4>15 items</h4>
+        <h4>
+          {items.filter((item) => !item.isCompleted).length}
+          {' '}
+          items
+        </h4>
       </div>
       <div className={listDetailsShown ? (styles.displayListDetails) : (styles.hideListDetails)}>
         <div className={styles.subheadingRow}>
