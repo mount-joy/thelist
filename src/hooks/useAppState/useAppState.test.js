@@ -22,7 +22,7 @@ const renderAndHydrateComponent = async () => {
     expect(instance.getByText(/Shopping List/)).toBeInTheDocument();
   });
 
-  const state = {
+  const savedState = {
     index: 0,
     lists: [{
       id: 'list-id',
@@ -30,13 +30,29 @@ const renderAndHydrateComponent = async () => {
       name: 'Shopping List',
       items: [
         { id: 's-1234', key: 's-1234', text: 'Apples' },
-        { id: 's-5678', key: 's-5678', text: 'Bananas' },
+        { id: 's-3345', key: 's-3345', text: 'Carrots' },
       ],
+      deletedItems: [],
     }],
   };
 
+  // The items get merged with the ones received in the api call so they don't exactly match
+  const state = {
+    ...savedState,
+    lists: [
+      {
+        ...savedState.lists[0],
+        items: [
+          { id: 's-1234', key: 's-1234', text: 'Apples' },
+          { id: 's-5678', key: 's-5678', text: 'Bananas' },
+        ],
+        deletedItems: [{ id: 's-3345', key: 's-3345', text: 'Carrots' }],
+      },
+    ],
+  };
+
   await act(async () => {
-    await ref.current.actions.setState(state);
+    await ref.current.actions.setState(savedState);
   });
 
   await waitFor(() => {
@@ -111,7 +127,7 @@ describe('useAppState', () => {
 
     expect(getState(instance)).toEqual({
       index: 0,
-      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
+      lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [], deletedItems: [] }],
     });
   });
 
@@ -177,6 +193,7 @@ describe('useAppState', () => {
               { id: 's-1234', key: 's-1234', text: 'Carrots' },
               { id: 's-5678', key: 's-5678', text: 'Bananas' },
             ],
+            deletedItems: [{ id: 's-3345', key: 's-3345', text: 'Carrots' }],
           }],
         });
       });
@@ -205,6 +222,7 @@ describe('useAppState', () => {
               { id: 's-1234', key: 's-1234', text: 'Apples' },
               { id: 's-5678', key: 's-5678', text: 'Bananas' },
             ],
+            deletedItems: [{ id: 's-3345', key: 's-3345', text: 'Carrots' }],
           }],
         });
       });
@@ -229,6 +247,7 @@ describe('useAppState', () => {
           key: expect.any(String),
           name: 'Shopping List',
           items: [{ id: 's-1234', key: 's-1234', text: 'Apples' }],
+          deletedItems: [{ id: 's-3345', key: 's-3345', text: 'Carrots' }, { id: 's-5678', key: 's-5678', text: 'Bananas' }],
         }],
       });
 
@@ -255,6 +274,7 @@ describe('useAppState', () => {
             { id: 's-1234', key: 's-1234', text: 'Apples' },
             { id: 's-5678', key: 's-5678', text: 'Bananas' },
           ],
+          deletedItems: [{ id: 's-3345', key: 's-3345', text: 'Carrots' }],
         }],
       });
     });
@@ -272,7 +292,7 @@ describe('useAppState', () => {
 
       expect(getState(instance)).toEqual({
         index: 0,
-        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [] }],
+        lists: [{ id: 'list-id', key: expect.any(String), name: 'Shopping List', items: [], deletedItems: [] }],
       });
     });
 
@@ -287,6 +307,7 @@ describe('useAppState', () => {
         key: expect.any(String),
         name: 'Shopping List',
         items: [{ id: 'new-item-id', key: expect.any(String), text: 'Carrots', isCompleted: false }],
+        deletedItems: [],
       }],
     });
 
@@ -311,6 +332,7 @@ describe('useAppState', () => {
             key: expect.any(String),
             name: 'Shopping List',
             items: [],
+            deletedItems: [],
           },
           {
             id: 'shared-list-id',
@@ -320,6 +342,7 @@ describe('useAppState', () => {
               { id: 's-abcd', key: 's-abcd', text: 'Pears' },
               { id: 's-wxyz', key: 's-wxyz', text: 'Oranges' },
             ],
+            deletedItems: [],
           },
         ],
       });

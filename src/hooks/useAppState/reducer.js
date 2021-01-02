@@ -19,7 +19,7 @@ const reducer = (state, { type, data }) => {
       const { key, name, id } = data;
       return {
         ...state,
-        lists: [...state.lists, { key, name, id, items: [] }],
+        lists: [...state.lists, { key, name, id, items: [], deletedItems: [] }],
         index: state.lists.length,
       };
     }
@@ -59,6 +59,10 @@ const reducer = (state, { type, data }) => {
           return {
             ...list,
             items: list.items.filter(({ key }) => key !== data.key),
+            deletedItems: [
+              ...list.deletedItems ?? [],
+              ...list.items.filter(({ key }) => key === data.key),
+            ],
           };
         }),
       };
@@ -159,6 +163,13 @@ const reducer = (state, { type, data }) => {
         .filter((item) => !existingIds.includes(item.id))
         .map((item) => ({ ...item, key: item.id }));
 
+      // Find IDs that no longer exist remotely
+      const remoteIds = data.items.map((item) => item.id);
+      const remotelyDeletedIds = existingIds
+        .filter((id) => id != null)
+        .filter((id) => !remoteIds.includes(id));
+      const isInRemotelyDeletedItems = (item) => remotelyDeletedIds.includes(item.id);
+
       return {
         ...state,
         lists: state.lists.map((list, index) => {
@@ -167,7 +178,14 @@ const reducer = (state, { type, data }) => {
           }
           return {
             ...list,
-            items: [...list.items, ...unknownItems],
+            items: [
+              ...list.items.filter((item) => !isInRemotelyDeletedItems(item)),
+              ...unknownItems,
+            ],
+            deletedItems: [
+              ...list.deletedItems ?? [],
+              ...list.items.filter((item) => isInRemotelyDeletedItems(item)),
+            ],
           };
         }),
       };
