@@ -8,7 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/react": "^11.2.2",
+    "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.0",
     "fake-indexeddb": "^3.1.2",
     "idb-keyval": "^3.2.0",
